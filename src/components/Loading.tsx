@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Droplets, Waves, Gauge, Activity, Database, Wifi } from 'lucide-react'
 
-const Loader = ({ showProgress = true }) => {
+const Loading = ({ showProgress = true }) => {
   const [progress, setProgress] = useState(0)
   const [currentMessage, setCurrentMessage] = useState(0)
 
@@ -157,4 +157,4 @@ const Loader = ({ showProgress = true }) => {
   )
 }
 
-export default Loader
+export default Loading

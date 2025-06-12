@@ -7,7 +7,7 @@ import { createGewogApi, deleteGewogApi, getGewogsApi, updateGewogApi } from '..
 
 type GewogStore = {
   gewogs: GewogType[];
-  loading: boolean;
+  gewogsLoading: boolean;
   error: string | null;
 
   fetchGewogs: () => Promise<void>;
@@ -18,11 +18,11 @@ type GewogStore = {
 
 export const useGewogStore = create<GewogStore>((set) => ({
   gewogs: [],
-  loading: false,
+  gewogsLoading: false,
   error: null,
 
   fetchGewogs: async () => {
-    set({ loading: true, error: null });
+    set({ gewogsLoading: true, error: null });
     try {
       const res = await getGewogsApi();
       set({ gewogs: res.data });
@@ -31,12 +31,12 @@ export const useGewogStore = create<GewogStore>((set) => ({
       toast.error(msg);
       set({ error: msg });
     } finally {
-      set({ loading: false });
+      set({ gewogsLoading: false });
     }
   },
 
   createGewog: async (payload: GewogUpdateType) => {
-    set({ loading: true, error: null });
+    set({ gewogsLoading: true, error: null });
     try {
       const res = await createGewogApi(payload);
       set((state) => ({
@@ -48,12 +48,12 @@ export const useGewogStore = create<GewogStore>((set) => ({
       toast.error(msg);
       set({ error: msg });
     } finally {
-      set({ loading: false });
+      set({ gewogsLoading: false });
     }
   },
 
 updateGewog: async (id: string, payload: GewogUpdateType) => {
-  set({ loading: true, error: null });
+  set({ gewogsLoading: true, error: null });
   try {
     await updateGewogApi({ _id: id, ...payload });
 
@@ -67,13 +67,13 @@ updateGewog: async (id: string, payload: GewogUpdateType) => {
     toast.error(msg);
     set({ error: msg });
   } finally {
-    set({ loading: false });
+    set({ gewogsLoading: false });
   }
 },
 
 
   deleteGewog: async (id: string) => {
-    set({ loading: true, error: null });
+    set({ gewogsLoading: true, error: null });
     try {
       await deleteGewogApi(id);
       set((state) => ({
@@ -85,7 +85,7 @@ updateGewog: async (id: string, payload: GewogUpdateType) => {
       toast.error(msg);
       set({ error: msg });
     } finally {
-      set({ loading: false });
+      set({ gewogsLoading: false });
     }
   },
 }));

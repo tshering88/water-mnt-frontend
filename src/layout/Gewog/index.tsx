@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import GewogCard from '../../components/GewogCard';
 import GewogFormModal from '../../components/GewogForm';
-import { getDzongkhagsApi } from '../../api/dzongkhagApi';
-import { Plus, Search } from 'lucide-react';
+import {  Plus, Search } from 'lucide-react';
 import type { DzongkhagType, GewogType, GewogUpdateType } from '../../types';
 import { useGewogStore } from '../../store/useGewogstore';
+import Loading from '../../components/Loading'
 
 import {
   Select,
@@ -13,11 +13,16 @@ import {
   SelectItem,
   SelectValue,
 } from '../../components/ui/select'; // Adjust path as needed
+import { useDzongkhagStore } from '../../store/useDzongkhagStore';
 
 const GewogManagement = () => {
-  const { gewogs, updateGewog, createGewog, deleteGewog, fetchGewogs } = useGewogStore();
+  const {gewogsLoading,error, gewogs, updateGewog, createGewog, deleteGewog, fetchGewogs } = useGewogStore();
+    const {
+      dzongkhagLoading,
+      dzongkhags,
+      fetchDzongkhags,
+    } = useDzongkhagStore()
 
-  const [dzongkhags, setDzongkhags] = useState<DzongkhagType[]>([]);
   const [search, setSearch] = useState('');
   // Default to 'all' instead of empty string
   const [selectedDzongkhag, setSelectedDzongkhag] = useState<string>('all');
@@ -25,26 +30,19 @@ const GewogManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+ 
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      try {
-        await fetchGewogs(); // load gewogs into store
-        const dzongkhagsRes = await getDzongkhagsApi();
-        setDzongkhags(Array.isArray(dzongkhagsRes.data) ? dzongkhagsRes.data : []);
-      } catch (err) {
-        setError('Failed to load data.');
-        console.error(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchData();
+    if(gewogs.length === 0){
+    fetchGewogs()
+    }
   }, [fetchGewogs]);
+
+  useEffect(() => {
+    if (!dzongkhagLoading && dzongkhags.length === 0) {
+      fetchDzongkhags();
+    }
+  }, [dzongkhagLoading, dzongkhags, fetchDzongkhags]);
 
   const handleEdit = (gewog: GewogType) => {
     setFormData(gewog);
@@ -95,9 +93,12 @@ const GewogManagement = () => {
       ? dzongkhags.find((d) => d?._id === dzongkhag)?.name || 'Unknown'
       : dzongkhag?.name || 'Unknown';
 
-  if (loading) return <div className="p-6 text-center">Loading...</div>;
+
   if (error) return <div className="p-6 text-center text-red-600">{error}</div>;
 
+ if (gewogsLoading || dzongkhagLoading) {
+    return <Loading />
+  }
   return (
     <div className="p-6 space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-center gap-4">

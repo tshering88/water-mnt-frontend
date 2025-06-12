@@ -10,11 +10,11 @@ import { useDzongkhagStore } from '../../store/useDzongkhagStore'
 import type { DzongkhagUpdateType } from '../../types'
 import DzongkhagList from '../../components/DzongkhagList'
 import { Button } from '../../components/ui/button'
-import Loader from '../../components/Loader'
+import Loading from '../../components/Loading'
 
 const Dzongkhag = () => {
   const {
-    loading,
+    dzongkhagLoading,
     dzongkhags,
     updateDzongkhag,
     createDzongkhag,
@@ -29,7 +29,9 @@ const Dzongkhag = () => {
     useState<DzongkhagUpdateType | null>(null)
 
   useEffect(() => {
+    if(dzongkhags.length === 0){
     fetchDzongkhags()
+    }
   }, [fetchDzongkhags])
 
   const regions = ['All', 'Western', 'Central', 'Southern', 'Eastern']
@@ -111,8 +113,8 @@ const Dzongkhag = () => {
     setEditingDzongkhag(null)
   }
 
-  if (loading) {
-    return <Loader />
+  if (dzongkhagLoading) {
+    return <Loading />
   }
 
   return (

@@ -10,7 +10,7 @@ import {
 
 type DzongkhagStore = {
   dzongkhags: DzongkhagType[];
-  loading: boolean;
+  dzongkhagLoading: boolean;
   error: string | null;
 
   fetchDzongkhags: () => Promise<void>;
@@ -21,11 +21,11 @@ type DzongkhagStore = {
 
 export const useDzongkhagStore = create<DzongkhagStore>((set) => ({
   dzongkhags: [],
-  loading: false,
+  dzongkhagLoading: false,
   error: null,
 
   fetchDzongkhags: async () => {
-    set({ loading: true, error: null });
+    set({ dzongkhagLoading: true, error: null });
     try {
       const res = await getDzongkhagsApi();
       set({ dzongkhags: res.data });
@@ -34,12 +34,12 @@ export const useDzongkhagStore = create<DzongkhagStore>((set) => ({
       toast.error(msg);
       set({ error: msg });
     } finally {
-      set({ loading: false });
+      set({ dzongkhagLoading: false });
     }
   },
 
   createDzongkhag: async (payload: DzongkhagUpdateType) => {
-    set({ loading: true, error: null });
+    set({ dzongkhagLoading: true, error: null });
     try {
       const res = await createDzongkhagApi(payload);
       set((state) => ({
@@ -51,12 +51,12 @@ export const useDzongkhagStore = create<DzongkhagStore>((set) => ({
       toast.error(msg);
       set({ error: msg });
     } finally {
-      set({ loading: false });
+      set({ dzongkhagLoading: false });
     }
   },
 
   updateDzongkhag: async (id: string, payload: DzongkhagUpdateType) => {
-    set({ loading: true, error: null });
+    set({ dzongkhagLoading: true, error: null });
     try {
       const res = await updateDzongkhagApi({ _id: id, ...payload });
       set((state) => ({
@@ -70,12 +70,12 @@ export const useDzongkhagStore = create<DzongkhagStore>((set) => ({
       toast.error(msg);
       set({ error: msg });
     } finally {
-      set({ loading: false });
+      set({ dzongkhagLoading: false });
     }
   },
 
   deleteDzongkhag: async (id: string) => {
-    set({ loading: true, error: null });
+    set({ dzongkhagLoading: true, error: null });
     try {
       await deleteDzongkhagApi(id);
       set((state) => ({
@@ -87,7 +87,7 @@ export const useDzongkhagStore = create<DzongkhagStore>((set) => ({
       toast.error(msg);
       set({ error: msg });
     } finally {
-      set({ loading: false });
+      set({ dzongkhagLoading: false });
     }
   },
 }));

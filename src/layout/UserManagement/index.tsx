@@ -4,6 +4,8 @@ import { useUserStore } from '../../store/useUserStore'
 import UserList from '../../components/UserList'
 import type { UserFormValues, UserType } from '../../types'
 import UserAddEdit from '../../components/UserAddEdit'
+import Loading from '../../components/Loading'
+
 
 const UserManagement = () => {
   const { addUser, updateUser, loading } = useUserStore()
@@ -51,7 +53,9 @@ const UserManagement = () => {
     setDialogOpen(false)
     setEditingUser(null)
   }
-
+if(loading){
+  return <Loading/>
+}
   return (
     <>
       <UserAddEdit

@@ -12,6 +12,8 @@ import {
   DropdownMenuTrigger,
 } from '../components/ui/dropdown-menu'
 
+
+
 interface UserListProps {
   onAddUserClick: () => void
   onEditUser: (user: any) => void // Adjust the type to match your actual user schema
@@ -27,7 +29,9 @@ const UserList = ({ onAddUserClick, onEditUser }: UserListProps) => {
   const hasAdminPrivileges = user?.role === UserRole.SUPER_ADMIN
 
   useEffect(() => {
+    if(users.length === 0){
     fetchUsers()
+    }
   }, [fetchUsers])
 
   const handleDeleteClick = (id: string, name: string) => {
