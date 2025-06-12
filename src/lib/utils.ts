@@ -6,8 +6,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-
-
 export const getRoleBadgeColor = (role: string): string => {
   const roleColors: Record<string, string> = {
     super_admin: 'bg-red-100 text-red-700 border-red-200',
@@ -26,13 +24,13 @@ export const getRoleBadgeColor = (role: string): string => {
 
 export const getRegionBadgeColor = (region: RegionType): string => {
   const regionColors: Record<RegionType, string> = {
-    [RegionType.WESTERN]: 'bg-blue-100 text-blue-700 border-blue-200',
-    [RegionType.CENTRAL]: 'bg-green-100 text-green-700 border-green-200',
-    [RegionType.SOUTHERN]: 'bg-yellow-100 text-yellow-700 border-yellow-200',
-    [RegionType.EASTERN]: 'bg-purple-100 text-purple-700 border-purple-200',
+    [RegionType.WESTERN]: 'bg-blue-400 text-blue-700 border-blue-200',
+    [RegionType.CENTRAL]: 'bg-green-400 text-green-700 border-green-200',
+    [RegionType.SOUTHERN]: 'bg-yellow-400 text-yellow-700 border-yellow-200',
+    [RegionType.EASTERN]: 'bg-purple-400 text-purple-700 border-purple-200',
   }
 
-  return regionColors[region] || 'bg-neutral-100 text-neutral-700 border-neutral-200'
+  return regionColors[region] || 'bg-neutral-400 text-neutral-700 border-neutral-200'
 }
 
 

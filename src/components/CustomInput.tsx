@@ -20,7 +20,7 @@ const CustomInput = <T extends FieldValues>({
 }: CustomInputProps<T>) => {
   return (
     <div className="flex flex-col gap-2">
-      <FormLabel className="text-sm font-medium text-gray-700">{label}</FormLabel>
+      <FormLabel className="text-md font-medium text-white">{label}</FormLabel>
       <Controller
         control={control}
         name={name}

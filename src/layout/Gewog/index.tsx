@@ -1,20 +1,26 @@
 import { useEffect, useState } from 'react';
 import GewogCard from '../../components/GewogCard';
 import GewogFormModal from '../../components/GewogForm';
-
-import {
-  getDzongkhagsApi
-} from '../../api/dzongkhagApi';
+import { getDzongkhagsApi } from '../../api/dzongkhagApi';
 import { Plus, Search } from 'lucide-react';
 import type { DzongkhagType, GewogType, GewogUpdateType } from '../../types';
 import { useGewogStore } from '../../store/useGewogstore';
+
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue,
+} from '../../components/ui/select'; // Adjust path as needed
 
 const GewogManagement = () => {
   const { gewogs, updateGewog, createGewog, deleteGewog, fetchGewogs } = useGewogStore();
 
   const [dzongkhags, setDzongkhags] = useState<DzongkhagType[]>([]);
   const [search, setSearch] = useState('');
-  const [selectedDzongkhag, setSelectedDzongkhag] = useState<string>('');
+  // Default to 'all' instead of empty string
+  const [selectedDzongkhag, setSelectedDzongkhag] = useState<string>('all');
   const [formData, setFormData] = useState<Partial<GewogType>>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -28,7 +34,6 @@ const GewogManagement = () => {
       setError(null);
       try {
         await fetchGewogs(); // load gewogs into store
-
         const dzongkhagsRes = await getDzongkhagsApi();
         setDzongkhags(Array.isArray(dzongkhagsRes.data) ? dzongkhagsRes.data : []);
       } catch (err) {
@@ -72,13 +77,15 @@ const GewogManagement = () => {
 
   const filteredGewogs = gewogs.filter((g): g is GewogType => {
     if (!g || !g.name) return false;
-
     const nameMatch = g.name.toLowerCase().includes(search.toLowerCase());
-    const dzongkhagMatch = selectedDzongkhag
-      ? typeof g.dzongkhag === 'object'
-        ? g.dzongkhag?._id === selectedDzongkhag
-        : g.dzongkhag === selectedDzongkhag
-      : true;
+
+    // Treat 'all' as no filter
+    const dzongkhagMatch =
+      selectedDzongkhag !== 'all'
+        ? typeof g.dzongkhag === 'object'
+          ? g.dzongkhag?._id === selectedDzongkhag
+          : g.dzongkhag === selectedDzongkhag
+        : true;
 
     return nameMatch && dzongkhagMatch;
   });
@@ -101,25 +108,28 @@ const GewogManagement = () => {
               type="text"
               placeholder="Search Gewogs"
               value={search}
-              onChange={e => setSearch(e.target.value)}
+              onChange={(e) => setSearch(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          <select
-            value={selectedDzongkhag}
-            onChange={e => setSelectedDzongkhag(e.target.value)}
-            className="border px-4 py-2 rounded-xl text-sm"
-          >
-            <option value="">All Dzongkhags</option>
-            {dzongkhags
-              .filter(d => d && d._id)
-              .map(d => (
-                <option key={d._id} value={d._id}>
-                  {d.name}
-                </option>
-              ))}
-          </select>
+          <Select value={selectedDzongkhag} onValueChange={setSelectedDzongkhag}>
+            <SelectTrigger className="w-[180px] rounded-xl  text-sm">
+              <SelectValue placeholder="All Dzongkhags" />
+            </SelectTrigger>
+           <SelectContent className="bg-white">
+  <SelectItem value="all">All Dzongkhags</SelectItem>
+  {[...dzongkhags]
+    .filter((d) => d && d._id)
+    .sort((a, b) => a.name.localeCompare(b.name)) // Sort alphabetically by name
+    .map((d) => (
+      <SelectItem key={d._id} value={d._id}>
+        {d.name}
+      </SelectItem>
+    ))}
+</SelectContent>
+
+          </Select>
         </div>
 
         <button
@@ -135,7 +145,7 @@ const GewogManagement = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {filteredGewogs.map(g => (
+        {filteredGewogs.map((g) => (
           <GewogCard
             key={g._id}
             gewog={g}
@@ -151,19 +161,18 @@ const GewogManagement = () => {
           isEditing={isEditing}
           formData={formData}
           dzongkhags={dzongkhags}
-          onChange={field =>
-  setFormData(prev => ({
-    ...prev,
-    ...field,
-    coordinates: field.coordinates
-      ? {
-          latitude: field.coordinates.latitude ?? prev.coordinates?.latitude ?? 0,
-          longitude: field.coordinates.longitude ?? prev.coordinates?.longitude ?? 0,
-        }
-      : prev.coordinates,
-  }))
-}
-
+          onChange={(field) =>
+            setFormData((prev) => ({
+              ...prev,
+              ...field,
+              coordinates: field.coordinates
+                ? {
+                    latitude: field.coordinates.latitude ?? prev.coordinates?.latitude ?? 0,
+                    longitude: field.coordinates.longitude ?? prev.coordinates?.longitude ?? 0,
+                  }
+                : prev.coordinates,
+            }))
+          }
           onSubmit={handleSubmit}
           onCancel={() => {
             setIsModalOpen(false);

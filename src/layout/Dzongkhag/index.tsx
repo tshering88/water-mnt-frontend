@@ -105,6 +105,7 @@ const Dzongkhag = () => {
     setEditingDzongkhag(dzongkhags)
     setDialogOpen(true)
   }
+  
   const closeDialog = () => {
     setDialogOpen(false)
     setEditingDzongkhag(null)
@@ -115,18 +116,18 @@ const Dzongkhag = () => {
   }
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50 p-6'>
-      <div className='max-w-7xl mx-auto space-y-8'>
+    <div className='min-h-screen bg-gradient-to-b from-slate-800 via-slate-700 to-slate-800 p-3 sm:p-6'>
+      <div className='max-w-7xl mx-auto space-y-6 sm:space-y-8'>
         {/* Header */}
-        <div className='text-center space-y-4'>
-          <div className='flex items-center justify-center gap-3'>
-            <Mountain className='h-12 w-12 text-indigo-600' />
-            <h1 className='text-4xl font-bold text-gray-900'>རྫོང་ཁག་</h1>
+        <div className='text-center space-y-3 sm:space-y-4'>
+          <div className='flex items-center justify-center gap-2 sm:gap-3'>
+            <Mountain className='h-8 w-8 sm:h-12 sm:w-12 text-indigo-600' />
+            <h1 className='text-2xl sm:text-4xl font-medium text-white'>རྫོང་ཁག་</h1>
           </div>
-          <h2 className='text-3xl font-bold text-gray-800'>
+          <h2 className='text-xl sm:text-3xl font-bold text-white'>
             20 Dzongkhags of Bhutan
           </h2>
-          <p className='text-lg text-gray-600 max-w-2xl mx-auto'>
+          <p className='text-sm sm:text-lg text-white max-w-2xl mx-auto px-4 sm:px-0'>
             The Kingdom of Bhutan is divided into 20 districts (Dzongkha:
             dzongkhags), each with its own unique cultural heritage and natural
             landscapes.
@@ -134,20 +135,20 @@ const Dzongkhag = () => {
         </div>
 
         {/* Region Statistics */}
-        <div className='grid grid-cols-1 md:grid-cols-4 gap-4 mb-8'>
+        <div className='grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8'>
           {regionStats.map((region) => (
             <Card
               key={region.name}
-              className='hover:shadow-lg transition-all duration-300'
+              className="hover:shadow-lg bg-white border border-gray-200 transition-all duration-300"
             >
-              <CardContent className='p-6'>
+              <CardContent className='p-4 sm:p-6'>
                 <div className='flex items-center gap-3'>
-                  <div className={`w-4 h-4 rounded-full ${region.color}`}></div>
-                  <div className='flex-1'>
-                    <h3 className='font-semibold text-gray-900'>
+                  <div className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full ${region.color} flex-shrink-0`}></div>
+                  <div className='flex-1 min-w-0'>
+                    <h3 className='font-semibold text-gray-900 text-sm sm:text-base break-words'>
                       {region.name}
                     </h3>
-                    <p className='text-sm text-gray-600'>
+                    <p className='text-xs sm:text-sm text-gray-600'>
                       {region.count} dzongkhags
                     </p>
                     <p className='text-xs text-gray-500'>
@@ -161,23 +162,25 @@ const Dzongkhag = () => {
         </div>
 
         {/* Search and Filter + Add Button */}
-        <div className='flex flex-col md:flex-row gap-4 items-center justify-between bg-gray-500 p-6 rounded-xl shadow-sm'>
-          <div className='relative flex-1 max-w-md'>
+        <div className='flex flex-col gap-4 bg-gray-500 p-4 sm:p-6 rounded-xl shadow-sm'>
+          {/* Search Input */}
+          <div className='relative w-full'>
             <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white' />
             <Input
               placeholder='Search dzongkhags...'
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className='pl-10'
+              className='pl-10 w-full'
             />
           </div>
 
-          <div className='flex flex-wrap items-center gap-2'>
+          {/* Filter Buttons */}
+          <div className='flex flex-wrap items-center justify-center sm:justify-start gap-2'>
             {regions.map((region) => (
               <button
                 key={region}
                 onClick={() => setSelectedRegion(region)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
                   selectedRegion === region
                     ? 'bg-indigo-600 text-white shadow-md'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
@@ -186,10 +189,14 @@ const Dzongkhag = () => {
                 {region}
               </button>
             ))}
+          </div>
+
+          {/* Add Button */}
+          <div className='flex justify-center sm:justify-start'>
             <Button
               onClick={onAddDzongkhagClick}
               variant='outline'
-              className='ml-2 px-5 py-2.5 rounded-xl text-sm font-semibold text-indigo-700 border-indigo-700 bg-indigo-100 hover:bg-indigo-400 transition-all flex items-center gap-2'
+              className='px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-indigo-700 border-indigo-700 bg-indigo-100 hover:bg-indigo-400 transition-all flex items-center gap-2 w-full sm:w-auto'
             >
               <Plus className='w-4 h-4' strokeWidth={2.5} />
               Add Dzongkhag
@@ -197,36 +204,37 @@ const Dzongkhag = () => {
           </div>
         </div>
 
-        {/* Dzongkhags Grid */}
-        <div className='grid grid-cols-1 md:grid-cols-2  gap-6'>
-          {filteredDzongkhags.map((dzongkhag) => (
-            <div
-              key={dzongkhag.code}
-              className='hover:shadow-xl transition-all duration-300 hover:-translate-y-2 group'
-            >
-              <DzongkhagList
-                onEditDzongkhag={onEditDzongkhag}
-                handleDeleteClick={handleDeleteClick}
-                dzongkhagData={dzongkhag}
-              />
-            </div>
-          ))}
-        </div>
+     {/* Dzongkhags Grid */}
+<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-3 gap-4 sm:gap-6'>
+  {filteredDzongkhags.map((dzongkhag) => (
+    <div
+      key={dzongkhag.code}
+       className='hover:shadow-xl transition-all bg-white duration-300 hover:-translate-y-1 sm:hover:-translate-y-2 group'
+    >
+      <DzongkhagList
+        onEditDzongkhag={onEditDzongkhag}
+        handleDeleteClick={handleDeleteClick}
+        dzongkhagData={dzongkhag}
+      />
+    </div>
+  ))}
+</div>
+
 
         {/* Summary Stats */}
         <Card className='bg-gradient-to-r from-indigo-600 to-purple-600 text-white'>
-          <CardContent className='p-8'>
-            <div className='grid grid-cols-1 md:grid-cols-3 gap-8 text-center'>
+          <CardContent className='p-6 sm:p-8'>
+            <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 text-center'>
               <div>
-                <h3 className='text-3xl font-bold'>{dzongkhags.length}</h3>
-                <p className='text-indigo-100'>Total Dzongkhags</p>
+                <h3 className='text-2xl sm:text-3xl font-bold'>{dzongkhags.length}</h3>
+                <p className='text-indigo-100 text-sm sm:text-base'>Total Dzongkhags</p>
               </div>
               <div>
-                <h3 className='text-3xl font-bold'>{regionStats.length}</h3>
-                <p className='text-indigo-100'>Administrative Regions</p>
+                <h3 className='text-2xl sm:text-3xl font-bold'>{regionStats.length}</h3>
+                <p className='text-indigo-100 text-sm sm:text-base'>Administrative Regions</p>
               </div>
               <div>
-                <h3 className='text-3xl font-bold'>
+                <h3 className='text-2xl sm:text-3xl font-bold'>
                   {formatNumber(
                     dzongkhags.reduce(
                       (sum, d) => sum + Number(d?.population ?? 0),
@@ -234,7 +242,7 @@ const Dzongkhag = () => {
                     )
                   )}
                 </h3>
-                <p className='text-indigo-100'>Total Population</p>
+                <p className='text-indigo-100 text-sm sm:text-base'>Total Population</p>
               </div>
             </div>
           </CardContent>
@@ -243,11 +251,11 @@ const Dzongkhag = () => {
         {/* Empty State */}
         {searchTerm && filteredDzongkhags.length === 0 && (
           <div className='text-center py-12'>
-            <MapPin className='h-16 w-16 text-gray-300 mx-auto mb-4' />
-            <h3 className='text-xl font-semibold text-gray-600 mb-2'>
+            <MapPin className='h-12 w-12 sm:h-16 sm:w-16 text-gray-300 mx-auto mb-4' />
+            <h3 className='text-lg sm:text-xl font-semibold text-gray-600 mb-2'>
               No dzongkhags found
             </h3>
-            <p className='text-gray-500'>
+            <p className='text-sm sm:text-base text-gray-500 px-4'>
               Try adjusting your search terms or filters
             </p>
           </div>

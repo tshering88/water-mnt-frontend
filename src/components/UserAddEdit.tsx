@@ -101,7 +101,7 @@ const UserAddEdit: React.FC<UserAddEditProps> = ({
   return (
     <Dialog open={open} onOpenChange={closeDialog}>
       <DialogContent
-        className="max-w-md bg-white right-0 top-10 my-auto translate-y-0 translate-x-0 fixed rounded-none shadow-lg border-l sm:rounded-none sm:max-w-md"
+        className="max-w-md bg-white right-0 top-30 my-auto translate-y-0 translate-x-0 fixed rounded-none shadow-lg border-l sm:rounded-none sm:max-w-md"
         style={{ marginLeft: 'auto' }}
       >
         <DialogHeader>
@@ -163,7 +163,7 @@ const UserAddEdit: React.FC<UserAddEditProps> = ({
             </div>
           </CardContent>
 
-          <CardFooter className="flex justify-between items-center gap-4">
+          <CardFooter className="flex justify-between mt-6 items-center gap-4">
             <DialogClose asChild>
               <Button variant="outline" disabled={loading}>Cancel</Button>
             </DialogClose>
