@@ -18,10 +18,10 @@ export function NavigationMenuSidebar({ isCollapsed, setIsCollapsed }: SidebarPr
   const location = useLocation();
   const [activeItem, setActiveItem] = useState(location.pathname);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user, fetchCurrentUser, logout } = useUserStore();
+  const { isAuthenticated, user, fetchCurrentUser, logout } = useUserStore();
 
   useEffect(() => {
-    fetchCurrentUser();
+    if (isAuthenticated) { fetchCurrentUser() }
   }, []);
 
   useEffect(() => {
