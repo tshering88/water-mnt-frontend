@@ -125,19 +125,19 @@ const UserAddEdit: React.FC<UserAddEditProps> = ({
             ))}
 
             {!initialValues?._id && (
-  <div>
-    <Input
-      type="password"
-      value={formData.password || ''}
-      onChange={(e) => handleChange('password', e.target.value)}
-      placeholder="Enter password"
-      className={errors.password ? 'border-red-500' : ''}
-    />
-    {errors.password && (
-      <p className="text-red-500 text-sm">{errors.password}</p>
-    )}
-  </div>
-)}
+              <div>
+                <Input
+                  type="password"
+                  value={formData.password || ''}
+                  onChange={(e) => handleChange('password', e.target.value)}
+                  placeholder="Enter password"
+                  className={errors.password ? 'border-red-500' : ''}
+                />
+                {errors.password && (
+                  <p className="text-red-500 text-sm">{errors.password}</p>
+                )}
+              </div>
+            )}
 
 
             <div className="flex flex-col gap-2">

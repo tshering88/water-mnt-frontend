@@ -14,7 +14,7 @@ import type { DzongkhagUpdateType } from '../types';
 interface DzongkhagAddEditDialogProps {
   open: boolean;
   onClose: () => void;
-  initialData: DzongkhagUpdateType| null; 
+  initialData: DzongkhagUpdateType | null;
   onAddOrUpdate: (dzongkhag: DzongkhagUpdateType) => void;
 }
 
@@ -40,49 +40,58 @@ export default function DzongkhagAddEditDialog({
 }: DzongkhagAddEditDialogProps) {
   const [form, setForm] = useState<DzongkhagUpdateType>(defaultForm);
 
-  useEffect(() => {
-    if (initialData) setForm(initialData);
-  }, [initialData]);
-
- const handleChange = (
-  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-) => {
-  const { name, value } = e.target;
-
-  if (name === 'latitude' || name === 'longitude') {
-    const parsedValue = parseFloat(value) || 0;
-    setForm((prev) => ({
-      ...prev,
-      coordinates: {
-        latitude:
-          name === 'latitude'
-            ? parsedValue
-            : prev.coordinates?.latitude ?? 0,
-        longitude:
-          name === 'longitude'
-            ? parsedValue
-            : prev.coordinates?.longitude ?? 0,
-      },
-    }));
-  } else if (name === 'area' || name === 'population') {
-    setForm((prev) => ({
-      ...prev,
-      [name]: value === '' ? 0 : parseFloat(value),
-    }));
+useEffect(() => {
+  if (initialData) {
+    setForm(initialData);
   } else {
-    setForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setForm(defaultForm); // <-- Reset form when dialog is closed or on cancel
   }
-};
+}, [initialData]);
+
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+
+    if (name === 'latitude' || name === 'longitude') {
+      const parsedValue = parseFloat(value) || null;
+      setForm((prev) => ({
+        ...prev,
+        coordinates: {
+          latitude:
+            name === 'latitude'
+              ? parsedValue
+              : prev.coordinates?.latitude ?? null,
+          longitude:
+            name === 'longitude'
+              ? parsedValue
+              : prev.coordinates?.longitude ?? null,
+        },
+      }));
+    } else if (name === 'area' || name === 'population') {
+      setForm((prev) => ({
+        ...prev,
+        [name]: value === '' ? 0 : parseFloat(value),
+      }));
+    } else {
+      setForm((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
+  };
 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onAddOrUpdate(form);
   };
+const handleClose =()=>{
+  onClose()
+  setForm(defaultForm);
 
+}
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-lg bg-white">
@@ -156,7 +165,7 @@ export default function DzongkhagAddEditDialog({
           />
 
           <DialogFooter className="flex justify-end space-x-2">
-            <Button variant="outline" onClick={onClose}>
+            <Button variant="outline" onClick={handleClose}>
               Cancel
             </Button>
             <Button type="submit" className="bg-indigo-600 text-white">

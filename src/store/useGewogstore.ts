@@ -52,24 +52,24 @@ export const useGewogStore = create<GewogStore>((set) => ({
     }
   },
 
-updateGewog: async (id: string, payload: GewogUpdateType) => {
-  set({ gewogsLoading: true, error: null });
-  try {
-    await updateGewogApi({ _id: id, ...payload });
+  updateGewog: async (id: string, payload: GewogUpdateType) => {
+    set({ gewogsLoading: true, error: null });
+    try {
+      await updateGewogApi({ _id: id, ...payload });
 
-    // ✅ Refetch the whole list to get up-to-date data
-    const res = await getGewogsApi();
-    set({ gewogs: res.data });
+      // ✅ Refetch the whole list to get up-to-date data
+      const res = await getGewogsApi();
+      set({ gewogs: res.data });
 
-    toast.success('Gewog updated successfully!');
-  } catch (err: any) {
-    const msg = err.message || 'Failed to update gewog';
-    toast.error(msg);
-    set({ error: msg });
-  } finally {
-    set({ gewogsLoading: false });
-  }
-},
+      toast.success('Gewog updated successfully!');
+    } catch (err: any) {
+      const msg = err.message || 'Failed to update gewog';
+      toast.error(msg);
+      set({ error: msg });
+    } finally {
+      set({ gewogsLoading: false });
+    }
+  },
 
 
   deleteGewog: async (id: string) => {

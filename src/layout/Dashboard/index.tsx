@@ -117,7 +117,7 @@ export default function DashboardHome() {
                     <p className="text-3xl font-bold text-slate-800">{tank.level}%</p>
                     <p className="text-sm text-slate-500">{Math.round(tank.capacity * tank.level / 100)} / {tank.capacity}L</p>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <div className="h-3 w-full bg-slate-200 rounded-full overflow-hidden">
                       <div
@@ -151,22 +151,22 @@ export default function DashboardHome() {
                 <AreaChart data={dailyConsumption}>
                   <defs>
                     <linearGradient id="consumptionGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3}/>
-                      <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.05}/>
+                      <stop offset="5%" stopColor="#3b82f6" stopOpacity={0.3} />
+                      <stop offset="95%" stopColor="#3b82f6" stopOpacity={0.05} />
                     </linearGradient>
                   </defs>
-                  <XAxis 
-                    dataKey="date" 
+                  <XAxis
+                    dataKey="date"
                     axisLine={false}
                     tickLine={false}
                     className="text-slate-600"
                   />
-                  <YAxis 
+                  <YAxis
                     axisLine={false}
                     tickLine={false}
                     className="text-slate-600"
                   />
-                  <Tooltip 
+                  <Tooltip
                     contentStyle={{
                       backgroundColor: 'white',
                       border: 'none',
@@ -213,17 +213,17 @@ export default function DashboardHome() {
                     outerRadius={100}
                     innerRadius={40}
                     paddingAngle={2}
-                    label={({source, percentage}) => `${source}: ${percentage}%`}
+                    label={({ source, percentage }) => `${source}: ${percentage}%`}
                   >
                     {waterSources.map((_entry, index) => (
-                      <Cell 
-                        key={index} 
+                      <Cell
+                        key={index}
                         fill={COLORS[index % COLORS.length]}
                         className="hover:opacity-80 transition-opacity"
                       />
                     ))}
                   </Pie>
-                  <Tooltip 
+                  <Tooltip
                     contentStyle={{
                       backgroundColor: 'white',
                       border: 'none',
@@ -259,14 +259,13 @@ export default function DashboardHome() {
                 </thead>
                 <tbody>
                   {leakAlerts.map((alert, index) => (
-                    <tr 
-                      key={alert.id} 
-                      className={`border-b border-slate-100 hover:bg-blue-50/50 transition-colors ${
-                        index % 2 === 0 ? 'bg-slate-50/30' : 'bg-white/50'
-                      }`}
+                    <tr
+                      key={alert.id}
+                      className={`border-b border-slate-100 hover:bg-blue-50/50 transition-colors ${index % 2 === 0 ? 'bg-slate-50/30' : 'bg-white/50'
+                        }`}
                     >
                       <td className="p-4 text-slate-600">
-                        {new Date(alert.time).toLocaleDateString()} {new Date(alert.time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
+                        {new Date(alert.time).toLocaleDateString()} {new Date(alert.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                       </td>
                       <td className="p-4 font-medium text-slate-800">{alert.type}</td>
                       <td className="p-4 text-slate-600">{alert.location}</td>
@@ -277,13 +276,12 @@ export default function DashboardHome() {
                       </td>
                       <td className="p-4">
                         <span
-                          className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                            alert.status === 'Resolved'
+                          className={`px-3 py-1 rounded-full text-xs font-semibold ${alert.status === 'Resolved'
                               ? 'bg-emerald-100 text-emerald-800 border border-emerald-200'
                               : alert.status === 'Active'
-                              ? 'bg-red-100 text-red-800 border border-red-200'
-                              : 'bg-amber-100 text-amber-800 border border-amber-200'
-                          }`}
+                                ? 'bg-red-100 text-red-800 border border-red-200'
+                                : 'bg-amber-100 text-amber-800 border border-amber-200'
+                            }`}
                         >
                           {alert.status}
                         </span>

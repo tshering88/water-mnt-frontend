@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import GewogCard from '../../components/GewogCard';
 import GewogFormModal from '../../components/GewogForm';
-import {  Plus, Search } from 'lucide-react';
+import { Plus, Search } from 'lucide-react';
 import type { DzongkhagType, GewogType, GewogUpdateType } from '../../types';
 import { useGewogStore } from '../../store/useGewogstore';
 import Loading from '../../components/Loading'
@@ -16,12 +16,12 @@ import {
 import { useDzongkhagStore } from '../../store/useDzongkhagStore';
 
 const GewogManagement = () => {
-  const {gewogsLoading,error, gewogs, updateGewog, createGewog, deleteGewog, fetchGewogs } = useGewogStore();
-    const {
-      dzongkhagLoading,
-      dzongkhags,
-      fetchDzongkhags,
-    } = useDzongkhagStore()
+  const { gewogsLoading, error, gewogs, updateGewog, createGewog, deleteGewog, fetchGewogs } = useGewogStore();
+  const {
+    dzongkhagLoading,
+    dzongkhags,
+    fetchDzongkhags,
+  } = useDzongkhagStore()
 
   const [search, setSearch] = useState('');
   // Default to 'all' instead of empty string
@@ -30,11 +30,9 @@ const GewogManagement = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
- 
-
   useEffect(() => {
-    if(gewogs.length === 0){
-    fetchGewogs()
+    if (gewogs.length === 0) {
+      fetchGewogs()
     }
   }, [fetchGewogs]);
 
@@ -96,7 +94,7 @@ const GewogManagement = () => {
 
   if (error) return <div className="p-6 text-center text-red-600">{error}</div>;
 
- if (gewogsLoading || dzongkhagLoading) {
+  if (gewogsLoading || dzongkhagLoading) {
     return <Loading />
   }
   return (
@@ -118,17 +116,17 @@ const GewogManagement = () => {
             <SelectTrigger className="w-[180px] rounded-xl  text-sm">
               <SelectValue placeholder="All Dzongkhags" />
             </SelectTrigger>
-           <SelectContent className="bg-white">
-  <SelectItem value="all">All Dzongkhags</SelectItem>
-  {[...dzongkhags]
-    .filter((d) => d && d._id)
-    .sort((a, b) => a.name.localeCompare(b.name)) // Sort alphabetically by name
-    .map((d) => (
-      <SelectItem key={d._id} value={d._id}>
-        {d.name}
-      </SelectItem>
-    ))}
-</SelectContent>
+            <SelectContent className="bg-white">
+              <SelectItem value="all">All Dzongkhags</SelectItem>
+              {[...dzongkhags]
+                .filter((d) => d && d._id)
+                .sort((a, b) => a.name.localeCompare(b.name)) // Sort alphabetically by name
+                .map((d) => (
+                  <SelectItem key={d._id} value={d._id}>
+                    {d.name}
+                  </SelectItem>
+                ))}
+            </SelectContent>
 
           </Select>
         </div>
@@ -168,9 +166,9 @@ const GewogManagement = () => {
               ...field,
               coordinates: field.coordinates
                 ? {
-                    latitude: field.coordinates.latitude ?? prev.coordinates?.latitude ?? 0,
-                    longitude: field.coordinates.longitude ?? prev.coordinates?.longitude ?? 0,
-                  }
+                  latitude: field.coordinates.latitude ?? prev.coordinates?.latitude ?? null,
+                  longitude: field.coordinates.longitude ?? prev.coordinates?.longitude ?? null,
+                }
                 : prev.coordinates,
             }))
           }

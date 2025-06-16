@@ -45,8 +45,8 @@ export const useUserStore = create<UserStore>()(
         set({ loading: true, error: null })
         try {
           const res = await fetchAllUsersApi()
-          console.log(res,"res")
-          set({      users: res.data })
+          console.log(res, "res")
+          set({ users: res.data })
         } catch (err: any) {
           const msg = err.response?.data?.message || 'Failed to fetch users'
           toast.error(msg)
@@ -55,7 +55,7 @@ export const useUserStore = create<UserStore>()(
           set({ loading: false })
         }
       },
-      
+
 
       loginUser: async (credentials) => {
         set({ loading: true, error: null })
@@ -65,8 +65,8 @@ export const useUserStore = create<UserStore>()(
             token: response.token,
             isAuthenticated: true,
           })
-          
-    await useUserStore.getState().fetchCurrentUser() 
+
+          await useUserStore.getState().fetchCurrentUser()
         } catch (err) {
           const error = err as AxiosError<{ message?: string }>
           const msg = error.response?.data?.message || 'Login failed'
@@ -86,8 +86,8 @@ export const useUserStore = create<UserStore>()(
             user: res.data,
             isAuthenticated: true,
           })
-              await useUserStore.getState().fetchUsers() 
-                await useUserStore.getState().fetchCurrentUser() 
+          await useUserStore.getState().fetchUsers()
+          await useUserStore.getState().fetchCurrentUser()
           toast.success('User Added Successfully.')
 
         } catch (err) {
@@ -105,15 +105,15 @@ export const useUserStore = create<UserStore>()(
         set({ loading: true, error: null })
         try {
           const res = await updateUserApi(id, payload)
-      set((state) => ({
-        users: state.users.map((user) =>
-          user._id === id ? res.data : user
-        ),
-        loading: false,
-      }))
-      
-    await useUserStore.getState().fetchCurrentUser() 
-      toast.success('user updated successfully!')
+          set((state) => ({
+            users: state.users.map((user) =>
+              user._id === id ? res.data : user
+            ),
+            loading: false,
+          }))
+
+          await useUserStore.getState().fetchCurrentUser()
+          toast.success('user updated successfully!')
         } catch (err: any) {
           const msg = err.response?.data?.message || 'Failed to update profile'
           toast.error(msg)
@@ -125,7 +125,7 @@ export const useUserStore = create<UserStore>()(
         set({ loading: true, error: null })
         try {
           await deleteUserApi(id)
-         
+
           toast.success('Account deleted successfully!')
         } catch (err: any) {
           const msg = err.response?.data?.message || 'Failed to delete account'

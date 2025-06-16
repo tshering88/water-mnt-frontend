@@ -41,11 +41,11 @@ export function NavigationMenuSidebar({ isCollapsed, setIsCollapsed }: SidebarPr
     const handleClickOutside = (e: MouseEvent) => {
       const sidebar = document.getElementById('mobile-sidebar');
       const menuButton = document.getElementById('mobile-menu-button');
-      
-      if (isMobileMenuOpen && 
-          sidebar && 
-          !sidebar.contains(e.target as Node) && 
-          !menuButton?.contains(e.target as Node)) {
+
+      if (isMobileMenuOpen &&
+        sidebar &&
+        !sidebar.contains(e.target as Node) &&
+        !menuButton?.contains(e.target as Node)) {
         setIsMobileMenuOpen(false);
       }
     };
@@ -88,9 +88,8 @@ export function NavigationMenuSidebar({ isCollapsed, setIsCollapsed }: SidebarPr
   // Mobile overlay
   const MobileOverlay = () => (
     <div
-      className={`md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 ${
-        isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-      }`}
+      className={`md:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-300 ${isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
     />
   );
 
@@ -137,9 +136,8 @@ export function NavigationMenuSidebar({ isCollapsed, setIsCollapsed }: SidebarPr
                     <div className="flex items-center space-x-3">
                       <Icon
                         size={20}
-                        className={`transition-colors duration-200 ${
-                          isActive ? 'text-blue-400' : 'text-slate-400 group-hover:text-white'
-                        }`}
+                        className={`transition-colors duration-200 ${isActive ? 'text-blue-400' : 'text-slate-400 group-hover:text-white'
+                          }`}
                       />
                       {(!isCollapsed || window.innerWidth < 768) && <span>{label}</span>}
                     </div>
@@ -200,7 +198,7 @@ export function NavigationMenuSidebar({ isCollapsed, setIsCollapsed }: SidebarPr
     <>
       {/* Mobile Menu Button */}
       <MobileMenuButton />
-      
+
       {/* Mobile Overlay */}
       <MobileOverlay />
 
@@ -214,7 +212,7 @@ export function NavigationMenuSidebar({ isCollapsed, setIsCollapsed }: SidebarPr
         `}
       >
         <SidebarContent />
-        
+
         {/* Desktop Collapse Button */}
         <button
           onClick={() => setIsCollapsed(!isCollapsed)}
@@ -222,9 +220,8 @@ export function NavigationMenuSidebar({ isCollapsed, setIsCollapsed }: SidebarPr
         >
           <ChevronRight
             size={12}
-            className={`text-slate-300 transition-transform duration-200 ${
-              isCollapsed ? 'rotate-0' : 'rotate-180'
-            }`}
+            className={`text-slate-300 transition-transform duration-200 ${isCollapsed ? 'rotate-0' : 'rotate-180'
+              }`}
           />
         </button>
       </div>

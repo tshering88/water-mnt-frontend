@@ -29,8 +29,8 @@ const UserList = ({ onAddUserClick, onEditUser }: UserListProps) => {
   const hasAdminPrivileges = user?.role === UserRole.SUPER_ADMIN
 
   useEffect(() => {
-    if(users.length === 0){
-    fetchUsers()
+    if (users.length === 0) {
+      fetchUsers()
     }
   }, [fetchUsers])
 
@@ -60,11 +60,10 @@ const UserList = ({ onAddUserClick, onEditUser }: UserListProps) => {
 
     return (
       <div
-        className={`p-4 rounded-lg border transition-all duration-200 ${
-          isCurrentUser 
-            ? 'bg-green-50 border-green-200 shadow-md' 
-            : 'bg-white border-gray-200 hover:shadow-md hover:border-gray-300'
-        }`}
+        className={`p-4 rounded-lg border transition-all duration-200 ${isCurrentUser
+          ? 'bg-green-50 border-green-200 shadow-md'
+          : 'bg-white border-gray-200 hover:shadow-md hover:border-gray-300'
+          }`}
       >
         <div className="flex items-start justify-between">
           {/* User Info */}
@@ -139,7 +138,7 @@ const UserList = ({ onAddUserClick, onEditUser }: UserListProps) => {
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <div className="flex items-center gap-3">
               <div className="p-2 bg-white/20 rounded-lg">
-               <Users className="w-5 h-5 sm:w-6 sm:h-6" />
+                <Users className="w-5 h-5 sm:w-6 sm:h-6" />
 
               </div>
               <div>
@@ -150,8 +149,8 @@ const UserList = ({ onAddUserClick, onEditUser }: UserListProps) => {
               </div>
             </div>
             {hasAdminPrivileges && (
-              <Button 
-                onClick={onAddUserClick} 
+              <Button
+                onClick={onAddUserClick}
                 className="bg-green-600 hover:bg-green-700 w-full sm:w-auto"
                 size="sm"
               >
@@ -219,9 +218,8 @@ const UserList = ({ onAddUserClick, onEditUser }: UserListProps) => {
                       return (
                         <tr
                           key={u._id}
-                          className={`transition-colors duration-150 group ${
-                            isCurrentUser ? 'bg-green-50 border-l-4 border-l-green-500' : 'hover:bg-gray-50'
-                          }`}
+                          className={`transition-colors duration-150 group ${isCurrentUser ? 'bg-green-50 border-l-4 border-l-green-500' : 'hover:bg-gray-50'
+                            }`}
                         >
                           <td className="px-6 py-4 whitespace-nowrap">
                             <div className="flex items-center gap-4">

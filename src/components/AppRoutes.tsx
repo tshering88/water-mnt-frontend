@@ -17,14 +17,14 @@ const AppRoute = () => {
 
       {/* Protected Routes */}
       <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/adduser" element={<UserManagement />} />         
-          <Route path="/alldzongkhag" element={<Dzongkhag/>}/>
-          <Route path="/allgewog" element={<Gewog/>}/>
+        <Route path="/" element={<Dashboard />} />
+        <Route path="/adduser" element={<UserManagement />} />
+        <Route path="/alldzongkhag" element={<Dzongkhag />} />
+        <Route path="/allgewog" element={<Gewog />} />
 
-          
-        </Route>
-       <Route path="*" element={<NotFoundPage/>}/>
+
+      </Route>
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   )
 }

@@ -19,7 +19,7 @@ const GewogForm: React.FC<Props> = ({
   onCancel,
 }) => {
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+    <section className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
       <div className="w-full max-w-2xl rounded-2xl bg-white shadow-2xl ring-1 ring-gray-200 overflow-hidden">
         <div className="px-6 py-5 border-b border-gray-100 bg-gradient-to-br from-white to-blue-50">
           <h2 className="text-xl md:text-2xl font-semibold text-gray-900">
@@ -162,7 +162,7 @@ const GewogForm: React.FC<Props> = ({
           </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

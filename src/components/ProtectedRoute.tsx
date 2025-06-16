@@ -2,7 +2,7 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { useUserStore } from '../store/useUserStore'
 
 const ProtectedRoute = () => {
-  const {  token } = useUserStore()
+  const { token } = useUserStore()
 
 
   if (!token) {

@@ -19,7 +19,7 @@ export const ConfirmDialog = ({
 }: ConfirmDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={onCancel}>
-         <DialogContent className="bg-gray-200 max-w-sm max-h-[90vh]">
+      <DialogContent className="bg-gray-200 max-w-sm max-h-[90vh]">
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
         </DialogHeader>
