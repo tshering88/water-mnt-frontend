@@ -42,14 +42,14 @@ const DzongkhagCard = ({ onEditDzongkhag, handleDeleteClick, dzongkhagData }: Dz
               <span className="break-words">{dzongkhagData.name}</span>
             </CardTitle>
             <CardDescription className=" flex justify-around mt-4 text-lg font-medium text-black  break-words">
-           <div>   {dzongkhagData?.nameInDzongkha} </div>
+              <div>   {dzongkhagData?.nameInDzongkha} </div>
 
-                <Badge className={`uppercase rounded-lg text-xs sm:text-sm font-semibold px-3 py-1.5 sm:px-4 sm:py-2 ${getRegionBadgeColor(dzongkhagData.region as RegionType)} text-white self-start sm:self-auto flex-shrink-0`}>
-            {dzongkhagData.region}
-          </Badge>
+              <Badge className={`uppercase rounded-lg text-xs sm:text-sm font-semibold px-3 py-1.5 sm:px-4 sm:py-2 ${getRegionBadgeColor(dzongkhagData.region as RegionType)} text-white self-start sm:self-auto flex-shrink-0`}>
+                {dzongkhagData.region}
+              </Badge>
             </CardDescription>
           </div>
-        
+
         </div>
       </CardHeader>
 
@@ -69,7 +69,7 @@ const DzongkhagCard = ({ onEditDzongkhag, handleDeleteClick, dzongkhagData }: Dz
               <Users className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 flex-shrink-0" />
               <div className="min-w-0 flex-1">
                 <p className="text-xs sm:text-sm font-medium text-gray-600">Population</p>
-                <p className="text-base sm:text-lg font-bold text-gray-900">{formatNumber(dzongkhagData.population)}</p>
+                <p className="text-base sm:text-lg font-bold text-gray-900">{formatNumber(dzongkhagData.population ?? 0)}</p>
               </div>
             </div>
           </div>
@@ -79,7 +79,7 @@ const DzongkhagCard = ({ onEditDzongkhag, handleDeleteClick, dzongkhagData }: Dz
               <Mountain className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600 flex-shrink-0" />
               <div className="min-w-0 flex-1">
                 <p className="text-xs sm:text-sm font-medium text-gray-600">Area</p>
-                <p className="text-base sm:text-lg font-bold text-gray-900">{formatNumber(dzongkhagData.area)} km²</p>
+                <p className="text-base sm:text-lg font-bold text-gray-900">{formatNumber(dzongkhagData.area ?? 0)} km²</p>
               </div>
             </div>
 
@@ -119,7 +119,9 @@ const DzongkhagCard = ({ onEditDzongkhag, handleDeleteClick, dzongkhagData }: Dz
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="text-center sm:text-left">
               <p className="text-indigo-100 text-xs sm:text-sm">Population Density</p>
-              <p className="text-xl sm:text-2xl font-bold">{Math.round(dzongkhagData.population / dzongkhagData.area)}</p>
+              <p className="text-xl sm:text-2xl font-bold">{dzongkhagData.population != null && dzongkhagData.area != null
+                ? Math.round(dzongkhagData.population / dzongkhagData.area)
+                : 'N/A'}</p>
               <p className="text-indigo-100 text-xs">people per km²</p>
             </div>
             <div className="text-center sm:text-left">

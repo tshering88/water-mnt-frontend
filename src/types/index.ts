@@ -70,6 +70,10 @@ export type DeleteUserResponse = {
 };
 
 //  Dzongkhag Type
+export type CoordinatesType =  {
+    latitude: number | null;
+    longitude: number| null;
+  };
 
 
 export type DzongkhagType = {
@@ -78,12 +82,9 @@ export type DzongkhagType = {
   nameInDzongkha: string;
   code: string;
   region: RegionType;
-  area: number;
-  population: number;
-  coordinates: {
-    latitude: number;
-    longitude: number;
-  };
+  area: number | null;
+  population: number | null;
+  coordinates: CoordinatesType
   createdAt: string; // ISO date string
   updatedAt: string; // ISO date string
 
@@ -98,18 +99,16 @@ export type CreateUpdateDzongkhagResponse = {
   message: string;
 };
 
+
 export type DzongkhagUpdateType = {
-  _id?: string;
+  _id: string;
   name?: string;
   nameInDzongkha?: string;
   code?: string;
-  area: number;
+  area: number | null;
   region?: RegionType;
-  population?: number;
-  coordinates?: {
-    latitude: number;
-    longitude: number;
-  };
+  population?: number | null;
+  coordinates?: CoordinatesType
 };
 
    ///////////
@@ -120,12 +119,9 @@ export type GewogType = {
   name: string;
   nameInDzongkha: string;
   dzongkhag: string | DzongkhagType; // Accept string ID or full object if populated
-  area: number;
-  population: number;
-  coordinates?: {
-    latitude: number;
-    longitude: number;
-  };
+  area: number | null ;
+  population: number | null;
+  coordinates?: CoordinatesType
 };
 
 export type GewogResponse = {
@@ -143,13 +139,10 @@ export type GewogUpdateType = {
   _id?: string;
   name?: string;
   nameInDzongkha?: string;
-  dzongkhag?: string | DzongkhagType; // Accept string ID or full object if populated
-  area?: number;
-  population?: number;
-  coordinates?: {
-    latitude?: number;
-    longitude?: number;
-  };
+  dzongkhag?: string | DzongkhagType // Accept string ID or full object if populated
+  area?: number | null;
+  population?: number | null;
+  coordinates?: CoordinatesType
 };
 
 

@@ -22,13 +22,14 @@ const defaultForm: DzongkhagUpdateType = {
   name: '',
   nameInDzongkha: '',
   code: '',
-  area: 0,
+  area: null,
   region: RegionType.WESTERN,
   population: undefined,
   coordinates: {
-    latitude: 0,
-    longitude: 0,
+    latitude: null,
+    longitude: null,
   },
+  _id: ''
 };
 
 export default function DzongkhagAddEditDialog({
@@ -113,16 +114,16 @@ export default function DzongkhagAddEditDialog({
           <Input
             name="area"
             type="number"
-            value={form.area}
+            value={form.area ?? ''} // ✅ Converts `null` to an empty string
             onChange={handleChange}
             placeholder="Area"
           />
+
           <select
             name="region"
             value={form.region}
             onChange={handleChange}
             className="w-full rounded border border-gray-300 p-2"
-           
           >
             {Object.values(RegionType).map((r) => (
               <option key={r} value={r}>

@@ -164,63 +164,67 @@ const Dzongkhag = () => {
         </div>
 
         {/* Search and Filter + Add Button */}
-        <div className='flex flex-col gap-4 bg-gray-500 p-4 sm:p-6 rounded-xl shadow-sm'>
+       <section className='flex flex-col gap-4 bg-gray-500 p-4 sm:p-6 rounded-xl shadow-sm'>
+        {/* Search + Filter Row */}
+        <div className='flex flex-wrap sm:flex-nowrap items-center gap-4'>
           {/* Search Input */}
-          <div className='relative w-full'>
+          <div className='relative w-full sm:w-64'>
             <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white' />
             <Input
               placeholder='Search dzongkhags...'
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className='pl-10 w-full'
+            className='pl-10 w-full'
             />
           </div>
-
+          
           {/* Filter Buttons */}
-          <div className='flex flex-wrap items-center justify-center sm:justify-start gap-2'>
+          <div className='flex flex-wrap items-center gap-2'>
             {regions.map((region) => (
               <button
                 key={region}
                 onClick={() => setSelectedRegion(region)}
-                className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all ${
-                  selectedRegion === region
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                {region}
+                className={`px-3 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all 
+                  ${selectedRegion === region
+                  ? 'bg-indigo-600 text-white shadow-md'
+                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }`}
+                >
+                  {region}
               </button>
             ))}
           </div>
-
-          {/* Add Button */}
-          <div className='flex justify-center sm:justify-start'>
-            <Button
-              onClick={onAddDzongkhagClick}
-              variant='outline'
-              className='px-4 py-2 sm:px-5 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-indigo-700 border-indigo-700 bg-indigo-100 hover:bg-indigo-400 transition-all flex items-center gap-2 w-full sm:w-auto'
-            >
-              <Plus className='w-4 h-4' strokeWidth={2.5} />
-              Add Dzongkhag
-            </Button>
-          </div>
         </div>
-
-     {/* Dzongkhags Grid */}
-<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-3 gap-4 sm:gap-6'>
-  {filteredDzongkhags.map((dzongkhag) => (
-    <div
-      key={dzongkhag.code}
-       className='hover:shadow-xl transition-all bg-white duration-300 hover:-translate-y-1 sm:hover:-translate-y-2 group'
-    >
-      <DzongkhagList
-        onEditDzongkhag={onEditDzongkhag}
-        handleDeleteClick={handleDeleteClick}
-        dzongkhagData={dzongkhag}
-      />
+        
+        {/* Add Button */}
+        <div className='flex justify-center w-full sm:justify-start'>
+          <Button
+            onClick={onAddDzongkhagClick}
+            variant='outline'
+            className='w-full sm:w-auto px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-semibold text-indigo-700 border-indigo-700 bg-indigo-100 hover:bg-indigo-400 transition-all flex items-center gap-2'
+          >
+            <Plus className='w-4 h-4' strokeWidth={2.5} />
+              Add Dzongkhag
+            
+          </Button>
+        </div>
+      </section>
+      
+      {/* Dzongkhags Grid */}
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  xl:grid-cols-3 gap-4 sm:gap-6'>
+      {filteredDzongkhags.map((dzongkhag) => (
+        <div
+          key={dzongkhag.code}
+          className='hover:shadow-xl transition-all bg-white duration-300 hover:-translate-y-1 sm:hover:-translate-y-2 group'
+        >
+          <DzongkhagList
+            onEditDzongkhag={onEditDzongkhag}
+            handleDeleteClick={handleDeleteClick}
+            dzongkhagData={dzongkhag}
+          />
+        </div>
+      ))}
     </div>
-  ))}
-</div>
 
 
         {/* Summary Stats */}

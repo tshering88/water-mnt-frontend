@@ -102,43 +102,47 @@ const GewogForm: React.FC<Props> = ({
               />
             </div>
 
-           {/* Latitude */}
-<div className="flex flex-col gap-1">
-  <label className="text-sm font-medium text-gray-700">Latitude</label>
-  <input
-    type="number"
-    placeholder="e.g., 27.456"
-    value={formData.coordinates?.latitude ?? ''}
-    onChange={(e) =>
-      onChange({
-        coordinates: {
-          ...formData.coordinates,
-          latitude: e.target.value ? parseFloat(e.target.value) : undefined,
-        },
-      })
-    }
-    className="rounded-xl border border-gray-300 px-4 py-2 text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-  />
-</div>
+            {/* Latitude */}
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-medium text-gray-700">Latitude</label>
+              <input
+                type="number"
+                placeholder="e.g., 27.456"
+                value={formData.coordinates?.latitude ?? ''}
+                onChange={(e) =>
+                  onChange({
+                    coordinates: {
+                      ...formData.coordinates,
+                      latitude: e.target.value ? parseFloat(e.target.value) : null,
+                      longitude: formData.coordinates?.longitude ?? null, // ensure no undefined
+                    },
+                  })
 
-{/* Longitude */}
-<div className="flex flex-col gap-1">
-  <label className="text-sm font-medium text-gray-700">Longitude</label>
-  <input
-    type="number"
-    placeholder="e.g., 89.640"
-    value={formData.coordinates?.longitude ?? ''}
-    onChange={(e) =>
-      onChange({
-        coordinates: {
-          ...formData.coordinates,
-          longitude: e.target.value ? parseFloat(e.target.value) : undefined,
-        },
-      })
-    }
-    className="rounded-xl border border-gray-300 px-4 py-2 text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-  />
-</div>
+                }
+                className="rounded-xl border border-gray-300 px-4 py-2 text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
+            </div>
+
+            {/* Longitude */}
+            <div className="flex flex-col gap-1">
+              <label className="text-sm font-medium text-gray-700">Longitude</label>
+              <input
+                type="number"
+                placeholder="e.g., 89.640"
+                value={formData.coordinates?.longitude ?? ''}
+                onChange={(e) =>
+                  onChange({
+                    coordinates: {
+                      ...formData.coordinates,
+                      longitude: e.target.value ? parseFloat(e.target.value) : null,
+                      latitude: formData.coordinates?.latitude ?? null,
+                    },
+                  })
+
+                }
+                className="rounded-xl border border-gray-300 px-4 py-2 text-sm text-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
+            </div>
 
           </div>
         </div>

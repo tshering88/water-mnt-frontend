@@ -58,7 +58,8 @@ export const useDzongkhagStore = create<DzongkhagStore>((set) => ({
   updateDzongkhag: async (id: string, payload: DzongkhagUpdateType) => {
     set({ dzongkhagLoading: true, error: null });
     try {
-      const res = await updateDzongkhagApi({ _id: id, ...payload });
+      const res = await updateDzongkhagApi({ ...payload, _id: id });
+
       set((state) => ({
         dzongkhags: state.dzongkhags.map((dz) =>
           dz._id === id ? res.data : dz

@@ -10,13 +10,11 @@ import CustomInput from '../../components/CustomInput'
 import { useUserStore } from '../../store/useUserStore'
 import { loginFormSchema } from '../../lib/validators'
 
-const SplashScreen = () => {
-  return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-900 text-white text-3xl z-50">
-      Loading...
-    </div>
-  )
-}
+const SplashScreen = () => (
+  <div className="fixed inset-0 flex items-center justify-center bg-gray-900 text-white text-2xl sm:text-3xl z-50">
+    Loading...
+  </div>
+)
 
 const LogIn = () => {
   const navigate = useNavigate()
@@ -29,12 +27,11 @@ const LogIn = () => {
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
-      identifier: '',
-      password: '',
+      identifier: '97512345',
+      password: 'Test@123',
     },
   })
 
-  // Simulate splash screen for 2 seconds on component mount
   useEffect(() => {
     const timer = setTimeout(() => setShowSplash(false), 2000)
     return () => clearTimeout(timer)
@@ -58,15 +55,15 @@ const LogIn = () => {
   if (showSplash) return <SplashScreen />
 
   return (
-    <section className="flex items-center justify-center min-h-screen bg-gray-900">
-      <div className="bg-gray-600 my-auto backdrop-blur-md rounded-xl shadow-xl p-10 w-full max-w-sm border border-white/20">
-        <header className="text-center mb-8">
-          <h1 className="text-lg tracking-widest text-white font-light">WELCOME</h1>
+    <section className="flex items-center justify-center min-h-screen bg-gray-900 px-4 py-8">
+      <div className="bg-gray-700 bg-opacity-80 backdrop-blur-md rounded-xl shadow-lg p-6 sm:p-10 w-full max-w-xs sm:max-w-sm border border-white/20">
+        <header className="text-center mb-6 sm:mb-8">
+          <h1 className="text-base sm:text-lg tracking-widest text-white font-light">WELCOME</h1>
           <hr className="mt-2 border-white/20" />
         </header>
 
         <Form {...form}>
-          <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
+          <form className="space-y-5 sm:space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <CustomInput<z.infer<typeof schema>>
               control={form.control}
               name="identifier"
@@ -92,7 +89,7 @@ const LogIn = () => {
           </form>
         </Form>
 
-        <footer className="mt-6 text-center text-sm text-white/80">
+        <footer className="mt-6 text-center text-xs sm:text-sm text-white/80 leading-snug">
           Don&apos;t have an account? Please contact the Admin to create one.
         </footer>
       </div>
