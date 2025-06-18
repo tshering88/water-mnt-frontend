@@ -9,6 +9,7 @@ import Dzongkhag from "../layout/Dzongkhag"
 import Gewog from "../layout/Gewog"
 import NotFoundPage from "../layout/NotFound"
 import ConsumerManagement from "../layout/consumers"
+import Home from "../layout/Home"
 
 
 const AppRoute = () => {
@@ -16,14 +17,17 @@ const AppRoute = () => {
     <Routes>
       {/* Public Routes */}
       <Route path="/login" element={<Login />} />
+      <Route path="/" element={<Home />} />
+
+
 
       {/* Protected Routes */}
       <Route element={<ProtectedRoute />}>
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/adduser" element={<UserManagement />} />
-        <Route path="/alldzongkhag" element={<Dzongkhag />} />
-        <Route path="/allgewog" element={<Gewog />} />
-        <Route path="/allconsumer" element={<ConsumerManagement />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/user" element={<UserManagement />} />
+        <Route path="/dzongkhag" element={<Dzongkhag />} />
+        <Route path="/gewog" element={<Gewog />} />
+        <Route path="/consumer" element={<ConsumerManagement />} />
 
 
 

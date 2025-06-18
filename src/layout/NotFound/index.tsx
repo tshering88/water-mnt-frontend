@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
-import { Alert, AlertDescription } from '../../components/ui/alert';
-import { Home, Search, ArrowLeft, Zap, Star, Heart } from 'lucide-react';
+import { Home, ArrowLeft, Zap, Star, Heart } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function NotFoundPage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [glitchText, setGlitchText] = useState('404');
-  const [showAlert, setShowAlert] = useState(false);
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const handleMouseMove = (e: { clientX: any; clientY: any }) => {
@@ -36,10 +37,7 @@ export default function NotFoundPage() {
     };
   }, []);
 
-  const handleSearchClick = () => {
-    setShowAlert(true);
-    setTimeout(() => setShowAlert(false), 3000);
-  };
+
 
   const floatingElements = Array.from({ length: 6 }, (_, i) => ({
     id: i,
@@ -103,43 +101,29 @@ export default function NotFoundPage() {
               </p>
             </div>
 
-            {/* Alert */}
-            {showAlert && (
-              <Alert className="bg-purple-500/20 border-purple-400/30 animate-fade-in">
-                <Search className="h-4 w-4 text-purple-400" />
-                <AlertDescription className="text-purple-100">
-                  Search functionality would be implemented here in a real application!
-                </AlertDescription>
-              </Alert>
-            )}
 
             {/* Action buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-              <button className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-full shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 hover:from-purple-500 hover:to-pink-500 focus:outline-none focus:ring-4 focus:ring-purple-500/50">
-                <div className="flex items-center gap-2">
-                  <Home className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
-                  <span>Go Home</span>
-                </div>
-                <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300 -z-10"></div>
-              </button>
+            <button
+              onClick={() => navigate('/')}
+              className="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold rounded-full shadow-lg hover:shadow-purple-500/25 transition-all duration-300 hover:scale-105 hover:from-purple-500 hover:to-pink-500 focus:outline-none focus:ring-4 focus:ring-purple-500/50"
+            >
+              <div className="flex items-center gap-2">
+                <Home className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
+                <span>Go Home</span>
+              </div>
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-600 to-pink-600 opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-300 -z-10"></div>
+            </button>
 
-              <button
-                onClick={handleSearchClick}
-                className="group relative px-8 py-4 bg-transparent border-2 border-purple-400 text-purple-300 font-semibold rounded-full hover:bg-purple-400 hover:text-white transition-all duration-300 hover:scale-105 hover:border-purple-300 focus:outline-none focus:ring-4 focus:ring-purple-500/50"
-              >
-                <div className="flex items-center gap-2">
-                  <Search className="w-5 h-5 group-hover:rotate-12 transition-transform duration-300" />
-                  <span>Search Site</span>
-                </div>
-              </button>
+            <button
+              onClick={() => navigate('/login')}
+              className="group relative ml-24 px-8 py-4 bg-transparent border-2 border-gray-400 text-gray-300 font-semibold rounded-full hover:bg-gray-400 hover:text-white transition-all duration-300 hover:scale-105 hover:border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-500/50"
+            >
+              <div className="flex items-center gap-2">
+                <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
+                <span>Go Back</span>
+              </div>
+            </button>
 
-              <button className="group relative px-8 py-4 bg-transparent border-2 border-gray-400 text-gray-300 font-semibold rounded-full hover:bg-gray-400 hover:text-white transition-all duration-300 hover:scale-105 hover:border-gray-300 focus:outline-none focus:ring-4 focus:ring-gray-500/50">
-                <div className="flex items-center gap-2">
-                  <ArrowLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
-                  <span>Go Back</span>
-                </div>
-              </button>
-            </div>
 
             {/* Fun suggestion */}
             <div className="pt-6 border-t border-white/10">

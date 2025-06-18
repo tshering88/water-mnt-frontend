@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { LogIn, UserPlus, ChevronRight, Map, LayoutDashboard, MapPin, Menu, X } from 'lucide-react';
+import { LogIn, UserPlus, ChevronRight, Map, LayoutDashboard, MapPin, Menu, X, Users } from 'lucide-react';
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -64,11 +64,11 @@ export function NavigationMenuSidebar({ isCollapsed, setIsCollapsed }: SidebarPr
   }, [isMobileMenuOpen]);
 
   const menuItems = [
-    { path: '/', label: 'Dashboard', icon: LayoutDashboard },
-    { path: '/adduser', label: 'User Management', icon: UserPlus },
-    { path: '/alldzongkhag', label: 'All Dzongkhags', icon: Map },
-    { path: '/allgewog', label: 'All Gewogs', icon: MapPin },
-    { path: '/allconsumer', label: 'Consumer Management', icon: MapPin },
+    { path: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+    { path: '/user', label: 'Users', icon: UserPlus },
+    { path: '/dzongkhag', label: 'Dzongkhags', icon: Map },
+    { path: '/gewog', label: 'Gewogs', icon: MapPin },
+    { path: '/consumer', label: 'Consumer', icon: Users }
   ];
 
   const getInitials = (name: string): string => {
