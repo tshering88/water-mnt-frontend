@@ -8,6 +8,8 @@ import Dashboard from "../layout/Dashboard"
 import Dzongkhag from "../layout/Dzongkhag"
 import Gewog from "../layout/Gewog"
 import NotFoundPage from "../layout/NotFound"
+import ConsumerManagement from "../layout/consumers"
+
 
 const AppRoute = () => {
   return (
@@ -21,6 +23,9 @@ const AppRoute = () => {
         <Route path="/adduser" element={<UserManagement />} />
         <Route path="/alldzongkhag" element={<Dzongkhag />} />
         <Route path="/allgewog" element={<Gewog />} />
+        <Route path="/allconsumer" element={<ConsumerManagement />} />
+
+
 
 
       </Route>

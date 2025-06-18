@@ -150,15 +150,15 @@ const GewogForm: React.FC<Props> = ({
         <div className="px-6 py-4 bg-gray-50 border-t border-gray-200 flex justify-end gap-4">
           <button
             onClick={onCancel}
-            className="rounded-xl bg-white border border-gray-300 px-5 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 transition"
+            className="rounded-xl bg-red-700 border border-gray-300 px-5 py-2 text-sm font-medium text-white  transition"
           >
             Cancel
           </button>
           <button
             onClick={onSubmit}
-            className="rounded-xl bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-700 transition"
+            className="rounded-xl border text-black px-5 py-2 text-sm font-semibold   transition"
           >
-            {isEditing ? 'Update Gewog' : 'Create Gewog'}
+            {isEditing ? 'Update' : 'Submit'}
           </button>
         </div>
       </div>

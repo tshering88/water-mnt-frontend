@@ -1,6 +1,7 @@
 import { clsx, type ClassValue } from "clsx"
 import { twMerge } from "tailwind-merge"
-import { RegionType, UserRole } from "./constant"
+import { ConnectionType, ConsumerStatus, RegionType, TariffCategory, UserRole } from "./constant"
+import type { Consumer, ConsumerFormType} from "../types"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -65,6 +66,62 @@ export const roleGroups = [
     ],
   },
 ]
+
+
+
+
+export const getStatusColor = (status?: ConsumerStatus): string => {
+  switch (status) {
+    case 'Active': 
+      return 'bg-green-100 text-green-800';
+    case 'Suspended': 
+      return 'bg-yellow-100 text-yellow-800';
+    case 'Disconnected': 
+      return 'bg-red-100 text-red-800';
+    default: 
+      return 'bg-gray-100 text-gray-800';
+  }
+};
+
+
+
+
+export const emptyConsumerForm: ConsumerFormType = {
+  householdId: '',
+  householdHead: '',
+  householdHeadName: '',
+  householdHeadCid: '',
+  householdHeadPhone: '',
+  addressDzongkhag: '',
+  addressGewog: '',
+  addressVillage: '',
+  addressHouseNumber: '',
+  familySize: 1,
+  connectionType: ConnectionType.INDIVIDUAL,
+  meterNumber: '',
+  connectionDate: '',
+  status: ConsumerStatus.ACTIVE,
+  tariffCategory: TariffCategory.DOMESTIC,
+};
+
+export const initializeFormDataFromConsumer = (consumer: Consumer): ConsumerFormType => ({
+  householdId: consumer.householdId,
+  householdHead: consumer.householdHead._id,
+  householdHeadName: consumer.householdHead.name,
+  householdHeadCid: consumer.householdHead.cid,
+  householdHeadPhone: consumer.householdHead.phone,
+  addressDzongkhag: '', // Leave blank or populate separately if needed
+  addressGewog: consumer.address.gewog._id,
+  addressVillage: consumer.address.village,
+  addressHouseNumber: consumer.address.houseNumber,
+  familySize: consumer.familySize,
+  connectionType: consumer.connectionType,
+  meterNumber: consumer.meterNumber,
+  connectionDate: consumer.connectionDate,
+  status: consumer.status,
+  tariffCategory: consumer.tariffCategory,
+});
+
 
 
 

@@ -1,7 +1,8 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
-import { AxiosError } from 'axios'
-import { toast } from 'react-toastify'
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { AxiosError } from 'axios';
+import { toast } from 'react-toastify';
+
 import type {
   LoginType,
   AddUserType,
@@ -9,26 +10,34 @@ import type {
   RegisterResponse,
   UserType,
   UserUpdateType,
-} from '../types'
-import { deleteUserApi, fetchAllUsersApi, fetchmeApi, loginApi, registerApi, updateUserApi } from '../api/userApi'
+} from '../types';
+
+import {
+  deleteUserApi,
+  fetchAllUsersApi,
+  fetchmeApi,
+  loginApi,
+  registerApi,
+  updateUserApi,
+} from '../api/userApi';
 
 type UserStore = {
-  user: UserType | null
-  token: string | null
-  isAuthenticated: boolean
-  loading: boolean
-  error: string | null
+  user: UserType | null;
+  token: string | null;
+  isAuthenticated: boolean;
+  loading: boolean;
+  error: string | null;
 
-  users: UserType[]
-  fetchUsers: () => Promise<void>
+  users: UserType[];
+  fetchUsers: () => Promise<void>;
 
-  loginUser: (credentials: LoginType) => Promise<void>
-  addUser: (payload: AddUserType) => Promise<void>
-  logout: () => void
-  updateUser: (id: string, payload: UserUpdateType) => Promise<void>
-  deleteUser: (id: string) => Promise<void>
-  fetchCurrentUser: () => Promise<void>
-}
+  loginUser: (credentials: LoginType) => Promise<void>;
+  addUser: (payload: AddUserType) => Promise<void>;
+  logout: () => void;
+  updateUser: (id: string, payload: UserUpdateType) => Promise<void>;
+  deleteUser: (id: string) => Promise<void>;
+  fetchCurrentUser: () => Promise<void>;
+};
 
 export const useUserStore = create<UserStore>()(
   persist(
@@ -38,118 +47,111 @@ export const useUserStore = create<UserStore>()(
       isAuthenticated: false,
       loading: false,
       error: null,
-
       users: [],
 
       fetchUsers: async () => {
-        set({ loading: true, error: null })
+        set({ loading: true, error: null });
         try {
-          const res = await fetchAllUsersApi()
-          console.log(res, "res")
-          set({ users: res.data })
+          const res = await fetchAllUsersApi();
+          set({ users: res.data });
         } catch (err: any) {
-          const msg = err.response?.data?.message || 'Failed to fetch users'
-          toast.error(msg)
-          set({ error: msg })
+          const msg = err.response?.data?.message || 'Failed to fetch users';
+          toast.error(msg);
+          set({ error: msg });
         } finally {
-          set({ loading: false })
+          set({ loading: false });
         }
       },
 
-
       loginUser: async (credentials) => {
-        set({ loading: true, error: null })
+        set({ loading: true, error: null });
         try {
-          const response: LoginResponse = await loginApi(credentials)
+          const response: LoginResponse = await loginApi(credentials);
           set({
             token: response.token,
             isAuthenticated: true,
-          })
-
-          await useUserStore.getState().fetchCurrentUser()
+          });
+          await useUserStore.getState().fetchCurrentUser();
         } catch (err) {
-          const error = err as AxiosError<{ message?: string }>
-          const msg = error.response?.data?.message || 'Login failed'
-          toast.error(msg)
-          set({ error: msg })
-          throw error
+          const error = err as AxiosError<{ message?: string }>;
+          const msg = error.response?.data?.message || 'Login failed';
+          toast.error(msg);
+          set({ error: msg });
+          throw error;
         } finally {
-          set({ loading: false })
+          set({ loading: false });
         }
       },
 
       addUser: async (payload) => {
-        set({ loading: true, error: null })
+        set({ loading: true, error: null });
         try {
-          const res: RegisterResponse = await registerApi(payload)
+          const res: RegisterResponse = await registerApi(payload);
           set({
             user: res.data,
             isAuthenticated: true,
-          })
-          await useUserStore.getState().fetchUsers()
-          await useUserStore.getState().fetchCurrentUser()
-          toast.success('User Added Successfully.')
-
+          });
+          await useUserStore.getState().fetchUsers();
+          await useUserStore.getState().fetchCurrentUser();
+          toast.success('User added successfully.');
         } catch (err) {
-          const error = err as AxiosError<{ message?: string }>
-          const msg = error.response?.data?.message || 'Failed to add user'
-          toast.error(msg)
-          set({ error: msg })
-          throw error
+          const error = err as AxiosError<{ message?: string }>;
+          const msg = error.response?.data?.message || 'Failed to add user';
+          toast.error(msg);
+          set({ error: msg });
+          throw error;
         } finally {
-          set({ loading: false })
+          set({ loading: false });
         }
       },
 
-      updateUser: async (id: string, payload: UserUpdateType) => {
-        set({ loading: true, error: null })
+      updateUser: async (id, payload) => {
+        set({ loading: true, error: null });
         try {
-          const res = await updateUserApi(id, payload)
+          const res = await updateUserApi(id, payload);
           set((state) => ({
             users: state.users.map((user) =>
               user._id === id ? res.data : user
             ),
             loading: false,
-          }))
-
-          await useUserStore.getState().fetchCurrentUser()
-          toast.success('user updated successfully!')
+          }));
+          await useUserStore.getState().fetchCurrentUser();
+          toast.success('User updated successfully!');
         } catch (err: any) {
-          const msg = err.response?.data?.message || 'Failed to update profile'
-          toast.error(msg)
-          set({ error: msg, loading: false })
+          const msg = err.response?.data?.message || 'Failed to update profile';
+          toast.error(msg);
+          set({ error: msg, loading: false });
         }
       },
 
       deleteUser: async (id) => {
-        set({ loading: true, error: null })
+        set({ loading: true, error: null });
         try {
-          await deleteUserApi(id)
-
-          toast.success('Account deleted successfully!')
+          await deleteUserApi(id);
+          toast.success('Account deleted successfully!');
         } catch (err: any) {
-          const msg = err.response?.data?.message || 'Failed to delete account'
-          toast.error(msg)
-          set({ error: msg, loading: false })
+          const msg = err.response?.data?.message || 'Failed to delete account';
+          toast.error(msg);
+          set({ error: msg, loading: false });
         }
       },
 
       fetchCurrentUser: async () => {
         try {
-          const { data } = await fetchmeApi()
+          const { data } = await fetchmeApi();
           set({
             user: data,
             isAuthenticated: true,
-          })
+          });
         } catch (err) {
-          const error = err as AxiosError<{ message?: string }>
-          const msg = error.response?.data?.message || 'Failed to fetch user'
-          toast.error(msg)
+          const error = err as AxiosError<{ message?: string }>;
+          const msg = error.response?.data?.message || 'Failed to fetch user';
+          toast.error(msg);
           set({
             user: null,
             isAuthenticated: false,
             error: msg,
-          })
+          });
         }
       },
 
@@ -158,12 +160,17 @@ export const useUserStore = create<UserStore>()(
           user: null,
           token: null,
           isAuthenticated: false,
-        })
+        });
+        useUserStore.persist.clearStorage();
       },
     }),
     {
       name: 'auth-storage-watermntsys',
-      partialize: (state) => ({ token: state.token }),
+      partialize: (state) => ({
+        user: state.user,
+        token: state.token,
+        isAuthenticated: state.isAuthenticated,
+      }),
     }
   )
-)
+);

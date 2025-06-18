@@ -21,8 +21,12 @@ export function NavigationMenuSidebar({ isCollapsed, setIsCollapsed }: SidebarPr
   const { isAuthenticated, user, fetchCurrentUser, logout } = useUserStore();
 
   useEffect(() => {
-    if (isAuthenticated) { fetchCurrentUser() }
-  }, []);
+    if (isAuthenticated && !user) {
+      fetchCurrentUser();
+    }
+  }, [isAuthenticated, user, fetchCurrentUser]);
+
+  console.log(user, "me")
 
   useEffect(() => {
     setActiveItem(location.pathname);
@@ -64,6 +68,7 @@ export function NavigationMenuSidebar({ isCollapsed, setIsCollapsed }: SidebarPr
     { path: '/adduser', label: 'User Management', icon: UserPlus },
     { path: '/alldzongkhag', label: 'All Dzongkhags', icon: Map },
     { path: '/allgewog', label: 'All Gewogs', icon: MapPin },
+    { path: '/allconsumer', label: 'Consumer Management', icon: MapPin },
   ];
 
   const getInitials = (name: string): string => {

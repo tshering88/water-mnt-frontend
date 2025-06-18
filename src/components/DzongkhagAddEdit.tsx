@@ -40,13 +40,13 @@ export default function DzongkhagAddEditDialog({
 }: DzongkhagAddEditDialogProps) {
   const [form, setForm] = useState<DzongkhagUpdateType>(defaultForm);
 
-useEffect(() => {
-  if (initialData) {
-    setForm(initialData);
-  } else {
-    setForm(defaultForm); // <-- Reset form when dialog is closed or on cancel
-  }
-}, [initialData]);
+  useEffect(() => {
+    if (initialData) {
+      setForm(initialData);
+    } else {
+      setForm(defaultForm); // <-- Reset form when dialog is closed or on cancel
+    }
+  }, [initialData]);
 
 
   const handleChange = (
@@ -87,11 +87,11 @@ useEffect(() => {
     e.preventDefault();
     onAddOrUpdate(form);
   };
-const handleClose =()=>{
-  onClose()
-  setForm(defaultForm);
+  const handleClose = () => {
+    onClose()
+    setForm(defaultForm);
 
-}
+  }
   return (
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-lg bg-white">
@@ -165,11 +165,11 @@ const handleClose =()=>{
           />
 
           <DialogFooter className="flex justify-end space-x-2">
-            <Button variant="outline" onClick={handleClose}>
+            <Button variant="outline" onClick={handleClose} className='bg-red-700 text-white hover:cursor-pointer'>
               Cancel
             </Button>
-            <Button type="submit" className="bg-indigo-600 text-white">
-              Save
+            <Button type="submit" variant="default" className="border hover:cursor-pointer">
+              Submit
             </Button>
           </DialogFooter>
         </form>

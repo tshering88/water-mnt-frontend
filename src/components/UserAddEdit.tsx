@@ -105,8 +105,11 @@ const UserAddEdit: React.FC<UserAddEditProps> = ({
         style={{ marginLeft: 'auto' }}
       >
         <DialogHeader>
-          <DialogTitle>{initialValues ? 'Edit User' : 'Add User'}</DialogTitle>
+          <DialogTitle className="text-center">
+            {initialValues ? 'Edit User' : 'Add User'}
+          </DialogTitle>
         </DialogHeader>
+
 
         <form onSubmit={handleFormSubmit}>
           <CardContent className="space-y-4">
@@ -165,12 +168,12 @@ const UserAddEdit: React.FC<UserAddEditProps> = ({
 
           <CardFooter className="flex justify-between mt-6 items-center gap-4">
             <DialogClose asChild>
-              <Button variant="outline" disabled={loading}>Cancel</Button>
+              <Button variant="outline" className='bg-red-700 text-white' disabled={loading}>Cancel</Button>
             </DialogClose>
             <Button
               type="submit"
               disabled={loading}
-              className="bg-rose-500 hover:bg-rose-600 text-white py-2 rounded-md font-semibold tracking-widest transition disabled:opacity-50"
+              className="border text-black py-2 rounded-md font-semibold tracking-widest transition disabled:opacity-50"
             >
               {loading ? (initialValues ? 'Updating...' : 'Adding...') : initialValues ? 'Update User' : 'Add User'}
             </Button>

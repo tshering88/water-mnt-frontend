@@ -99,7 +99,6 @@ export const fetchAllUsersApi = async (): Promise<GetUsersResponse> => {
   try {
     const endpoint = '/users/getall'
     const { data } = await api.get<GetUsersResponse>(endpoint)
-    console.log(data,"api")
     return data
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
