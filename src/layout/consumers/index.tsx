@@ -10,7 +10,7 @@ import { useConsumerStore } from '../../store/useConsumerStore';
 
 export default function ConsumerManagement() {
 
-  const { consumers, fetchConsumers, consumersLoading ,addConsumer,updateConsumer,deleteConsumer} = useConsumerStore()
+  const { consumers, fetchConsumers, consumersLoading, addConsumer, updateConsumer, deleteConsumer } = useConsumerStore()
   const [selectedConsumer, setSelectedConsumer] = useState<Consumer | null>(null);
   const [modalMode, setModalMode] = useState<'add' | 'edit' | 'view' | null>(null);
 
@@ -67,7 +67,23 @@ export default function ConsumerManagement() {
 
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Consumer Management</h1>
+      <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl p-6 shadow-md mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-white flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 11V7a4 4 0 10-8 0v4m-2 4h12a2 2 0 012 2v5H2v-5a2 2 0 012-2z" />
+            </svg>
+            Consumer Management
+          </h1>
+        </div>
+
+        {/* Optional: Add Button or Summary */}
+        <div className="hidden md:flex flex-col items-end text-white">
+          <span className="text-sm">Total Consumers</span>
+          <span className="text-3xl font-extrabold">{consumers.length}</span>
+        </div>
+      </div>
+
       <button
         onClick={() => {
           setSelectedConsumer(null);

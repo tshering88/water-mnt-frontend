@@ -4,7 +4,7 @@ import GewogFormModal from '../../components/GewogForm';
 import { Plus, Search } from 'lucide-react';
 import type { DzongkhagType, GewogType, GewogUpdateType } from '../../types';
 import { useGewogStore } from '../../store/useGewogstore';
-import Loading from '../../components/Loading'
+import Loading from '../../components/Loading';
 
 import {
   Select,
@@ -12,19 +12,27 @@ import {
   SelectContent,
   SelectItem,
   SelectValue,
-} from '../../components/ui/select'; // Adjust path as needed
+} from '../../components/ui/select';
 import { useDzongkhagStore } from '../../store/useDzongkhagStore';
 
 const GewogManagement = () => {
-  const { gewogsLoading, error, gewogs, updateGewog, createGewog, deleteGewog, fetchGewogs } = useGewogStore();
+  const {
+    gewogsLoading,
+    error,
+    gewogs,
+    updateGewog,
+    createGewog,
+    deleteGewog,
+    fetchGewogs,
+  } = useGewogStore();
+
   const {
     dzongkhagLoading,
     dzongkhags,
     fetchDzongkhags,
-  } = useDzongkhagStore()
+  } = useDzongkhagStore();
 
   const [search, setSearch] = useState('');
-  // Default to 'all' instead of empty string
   const [selectedDzongkhag, setSelectedDzongkhag] = useState<string>('all');
   const [formData, setFormData] = useState<Partial<GewogType>>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -32,7 +40,7 @@ const GewogManagement = () => {
 
   useEffect(() => {
     if (gewogs.length === 0) {
-      fetchGewogs()
+      fetchGewogs();
     }
   }, [fetchGewogs]);
 
@@ -75,7 +83,6 @@ const GewogManagement = () => {
     if (!g || !g.name) return false;
     const nameMatch = g.name.toLowerCase().includes(search.toLowerCase());
 
-    // Treat 'all' as no filter
     const dzongkhagMatch =
       selectedDzongkhag !== 'all'
         ? typeof g.dzongkhag === 'object'
@@ -91,14 +98,26 @@ const GewogManagement = () => {
       ? dzongkhags.find((d) => d?._id === dzongkhag)?.name || 'Unknown'
       : dzongkhag?.name || 'Unknown';
 
-
   if (error) return <div className="p-6 text-center text-red-600">{error}</div>;
+  if (gewogsLoading || dzongkhagLoading) return <Loading />;
 
-  if (gewogsLoading || dzongkhagLoading) {
-    return <Loading />
-  }
   return (
     <div className="p-6 space-y-6">
+      {/* Bhutan Header */}
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-6 shadow-md mb-6">
+        {/* Left Section: Title & Description */}
+        <div>
+          <h1 className="text-3xl font-bold text-white tracking-wide">Gewog Management</h1>
+        </div>
+
+        {/* Right Section: Stats */}
+        <div className="mt-4 md:mt-0 text-right">
+          <span className="text-sm text-white/80">Total Gewogs</span>
+          <div className="text-3xl font-extrabold text-white mt-1">{gewogs.length}</div>
+        </div>
+      </div>
+
+      {/* Filter Bar */}
       <div className="flex flex-col md:flex-row justify-between items-center gap-4">
         <div className="flex gap-4 items-center w-full md:w-auto">
           <div className="relative w-full md:w-72">
@@ -113,21 +132,20 @@ const GewogManagement = () => {
           </div>
 
           <Select value={selectedDzongkhag} onValueChange={setSelectedDzongkhag}>
-            <SelectTrigger className="w-[180px] rounded-xl  text-sm">
+            <SelectTrigger className="w-[180px] rounded-xl text-sm">
               <SelectValue placeholder="All Dzongkhags" />
             </SelectTrigger>
             <SelectContent className="bg-white">
               <SelectItem value="all">All Dzongkhags</SelectItem>
               {[...dzongkhags]
                 .filter((d) => d && d._id)
-                .sort((a, b) => a.name.localeCompare(b.name)) // Sort alphabetically by name
+                .sort((a, b) => a.name.localeCompare(b.name))
                 .map((d) => (
                   <SelectItem key={d._id} value={d._id}>
                     {d.name}
                   </SelectItem>
                 ))}
             </SelectContent>
-
           </Select>
         </div>
 
@@ -143,6 +161,7 @@ const GewogManagement = () => {
         </button>
       </div>
 
+      {/* Gewog Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {filteredGewogs.map((g) => (
           <GewogCard
@@ -155,6 +174,7 @@ const GewogManagement = () => {
         ))}
       </div>
 
+      {/* Modal */}
       {isModalOpen && (
         <GewogFormModal
           isEditing={isEditing}
