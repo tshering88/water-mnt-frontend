@@ -73,13 +73,13 @@ export const roleGroups = [
 export const getStatusColor = (status?: ConsumerStatus): string => {
   switch (status) {
     case 'Active': 
-      return 'bg-green-100 text-green-800';
+      return ' text-green-800';
     case 'Suspended': 
-      return 'bg-yellow-100 text-yellow-800';
+      return 'text-yellow-800';
     case 'Disconnected': 
-      return 'bg-red-100 text-red-800';
+      return ' text-red-800';
     default: 
-      return 'bg-gray-100 text-gray-800';
+      return ' text-gray-800';
   }
 };
 
@@ -105,13 +105,14 @@ export const emptyConsumerForm: ConsumerFormType = {
 };
 
 export const initializeFormDataFromConsumer = (consumer: Consumer): ConsumerFormType => ({
+  _id: consumer._id,
   householdId: consumer.householdId,
   householdHead: consumer.householdHead._id,
   householdHeadName: consumer.householdHead.name,
   householdHeadCid: consumer.householdHead.cid,
   householdHeadPhone: consumer.householdHead.phone,
-  addressDzongkhag: '', // Leave blank or populate separately if needed
-  addressGewog: consumer.address.gewog._id,
+  addressDzongkhag: '', // populate later if needed
+  addressGewog: consumer.address.gewog?._id || '',
   addressVillage: consumer.address.village,
   addressHouseNumber: consumer.address.houseNumber,
   familySize: consumer.familySize,
@@ -121,6 +122,7 @@ export const initializeFormDataFromConsumer = (consumer: Consumer): ConsumerForm
   status: consumer.status,
   tariffCategory: consumer.tariffCategory,
 });
+
 
 
 

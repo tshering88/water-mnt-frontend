@@ -1,42 +1,33 @@
 import { useEffect, useState } from 'react';
 import type { Consumer, CreateConsumerPayload } from '../../types';
-import { getConsumers, createConsumer, updateConsumer, deleteConsumer } from '../../api/consumerApi';
 import ConsumerDialog from '../../components/ConsumerDialog';
 import { toast } from 'react-toastify';
 import { ConsumerTable } from '../../components/ConsumerTable';
 
 import { ConfirmDialog } from '../../components/ConfirmationDialog';
+import Loading from '../../components/Loading';
+import { useConsumerStore } from '../../store/useConsumerStore';
 
 export default function ConsumerManagement() {
-  const [consumers, setConsumers] = useState<Consumer[]>([]);
-  const [loading, setLoading] = useState(false);
+
+  const { consumers, fetchConsumers, consumersLoading ,addConsumer,updateConsumer,deleteConsumer} = useConsumerStore()
   const [selectedConsumer, setSelectedConsumer] = useState<Consumer | null>(null);
   const [modalMode, setModalMode] = useState<'add' | 'edit' | 'view' | null>(null);
 
   // New state for delete confirmation dialog
   const [confirmDeleteId, setConfirmDeleteId] = useState<string | null>(null);
 
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const data = await getConsumers();
-      setConsumers(data.data);
-    } catch (error) {
-      toast.error('Failed to load consumers');
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (consumers.length === 0) {
+      fetchConsumers()
+    }
+  }, [fetchConsumers])
 
   const handleAdd = async (payload: CreateConsumerPayload) => {
     try {
-      await createConsumer(payload);
-      await fetchData();
+      await addConsumer(payload);
+      await fetchConsumers();
       toast.success('Consumer added successfully');
     } catch (error) {
       toast.error('Failed to add consumer');
@@ -47,7 +38,7 @@ export default function ConsumerManagement() {
   const handleUpdate = async (id: string, payload: CreateConsumerPayload) => {
     try {
       await updateConsumer(id, payload);
-      await fetchData();
+      await fetchConsumers();
       toast.success('Consumer updated successfully');
     } catch (error) {
       toast.error('Failed to update consumer');
@@ -58,7 +49,6 @@ export default function ConsumerManagement() {
   const handleDelete = async (id: string) => {
     try {
       await deleteConsumer(id);
-      await fetchData();
       toast.success('Consumer deleted successfully');
     } catch (error) {
       toast.error('Failed to delete consumer');
@@ -69,6 +59,10 @@ export default function ConsumerManagement() {
   function onView(c: Consumer): void {
     setSelectedConsumer(c);
     setModalMode('view');
+  }
+
+  if (consumersLoading) {
+    return <Loading />
   }
 
   return (
@@ -84,8 +78,8 @@ export default function ConsumerManagement() {
         Add Consumer
       </button>
 
-      {loading && <p>Loading consumers...</p>}
-      {!loading && consumers.length === 0 && <p>No consumers found.</p>}
+
+      {!consumersLoading && consumers.length === 0 && <p>No consumers found.</p>}
 
       <ConsumerTable
         consumers={consumers}

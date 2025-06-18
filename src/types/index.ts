@@ -273,6 +273,7 @@ export type ConsumerPayload = {
 };
 
 export type ConsumerFormType = {
+  _id?: string
   userId?: string
   householdId: string;
   householdHead?: string; // optional if not editing

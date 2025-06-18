@@ -1,3 +1,4 @@
+import { getStatusColor } from "../lib/utils";
 import type { Consumer } from "../types";
 
 
@@ -34,8 +35,11 @@ export const ConsumerTable: React.FC<ConsumerTableProps> = ({ consumers, onEdit,
                         <tr key={c.householdId} className="hover:bg-blue-50 bg-gray-200">
                             <td className="p-4 border-t">{c.householdId}</td>
                             <td className="p-4 border-t">{c.householdHead?.name ?? "N/A"}</td>
-                            <td className="p-4 border-t">{c.status}</td>
-                            <td className="p-4 border-t">{c.address?.gewog?.name ?? "N/A"}</td>  {/* <-- Fix here */}
+                            <td className={`p-2 border-t rounded text-sm font-medium text-center ${getStatusColor(c.status)}`}>
+                                {c.status}
+                            </td>
+
+                            <td className="p-4 border-t">{c.address?.gewog?.name ?? "N/A"}</td>
                             <td className="p-4 border-t">{c.tariffCategory}</td>
                             <td className="p-4 border-t">{c.meterNumber}</td>
                             <td className="p-4 border-t text-right space-x-2">
