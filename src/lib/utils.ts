@@ -71,17 +71,15 @@ export const roleGroups = [
 
 
 export const getStatusColor = (status?: ConsumerStatus): string => {
-  switch (status) {
-    case 'Active': 
-      return ' text-green-800';
-    case 'Suspended': 
-      return 'text-yellow-800';
-    case 'Disconnected': 
-      return ' text-red-800';
-    default: 
-      return ' text-gray-800';
-  }
+  const statusColors: Record<ConsumerStatus, string> = {
+    Active: 'bg-green-100 text-green-800 border border-green-200',
+    Suspended: 'bg-yellow-100 text-yellow-800 border border-yellow-200',
+    Disconnected: 'bg-red-100 text-red-800 border border-red-200',
+  };
+
+  return status ? statusColors[status] : 'bg-gray-100 text-gray-800 border border-gray-200';
 };
+
 
 
 

@@ -1,56 +1,81 @@
+import { Pencil, Trash2 } from "lucide-react";
 import { getStatusColor } from "../lib/utils";
 import type { Consumer } from "../types";
 
-
 interface ConsumerTableProps {
     consumers: Consumer[];
-    onView: (c: Consumer) => void;
+    onView?: (c: Consumer) => void;
     onEdit: (c: Consumer) => void;
     onDelete: (id: string) => void;
 }
 
-export const ConsumerTable: React.FC<ConsumerTableProps> = ({ consumers, onEdit, onDelete }) => (
-    <section className="overflow-x-auto b text-gray-800 rounded-xl shadow-sm border">
-        <table className="w-full text-left">
-            <thead className="bg-blue-600 text-black text-sm font-semibold">
+export const ConsumerTable: React.FC<ConsumerTableProps> = ({
+    consumers,
+    onEdit,
+    onDelete,
+}) => (
+    <section className="overflow-x-auto rounded-xl shadow-md border border-gray-200">
+        <table className="w-full text-sm text-left text-gray-700">
+            <thead className="bg-gradient-to-r from-indigo-500 to-purple-500 text-white text-sm font-semibold tracking-wide">
                 <tr>
-                    <th className="p-4">Household ID</th>
-                    <th className="p-4">Name</th>
-                    <th className="p-4">Status</th>
-                    <th className="p-4">Gewog</th>
-                    <th className="p-4">Tariff</th>
-                    <th className="p-4">Meter No.</th>
-                    <th className="p-4 text-right">Actions</th>
+                    <th className="px-4 py-3">Household ID</th>
+                    <th className="px-4 py-3">Name</th>
+                    <th className="px-4 py-3">Status</th>
+                    <th className="px-4 py-3">Gewog</th>
+                    <th className="px-4 py-3">Tariff</th>
+                    <th className="px-4 py-3">Meter No.</th>
+                    <th className="px-4 py-3 text-right">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 {consumers.length === 0 ? (
                     <tr>
-                        <td colSpan={7} className="text-center p-6 ">
+                        <td colSpan={7} className="text-center py-6 text-gray-500">
                             No consumers found.
                         </td>
                     </tr>
                 ) : (
-                    consumers.map((c) => (
-                        <tr key={c.householdId} className="hover:bg-blue-50 bg-gray-200">
-                            <td className="p-4 border-t">{c.householdId}</td>
-                            <td className="p-4 border-t">{c.householdHead?.name ?? "N/A"}</td>
-                            <td className={`p-2 border-t rounded text-sm font-medium text-center ${getStatusColor(c.status)}`}>
-                                {c.status}
+                    consumers.map((c, index) => (
+                        <tr
+                            key={c.householdId}
+                            className={`${index % 2 === 0 ? "bg-gray-50" : "bg-white"
+                                } hover:bg-blue-50 transition-colors`}
+                        >
+                            <td className="px-4 py-3 border-t">{c.householdId}</td>
+                            <td className="px-4 py-3 border-t">{c.householdHead?.name ?? "N/A"}</td>
+                            <td className="px-4 py-2 border-t">
+                                <span
+                                    className={`inline-block px-3 py-1 text-xs font-medium rounded-full capitalize ${getStatusColor(
+                                        c.status
+                                    )}`}
+                                >
+                                    {c.status}
+                                </span>
                             </td>
 
-                            <td className="p-4 border-t">{c.address?.gewog?.name ?? "N/A"}</td>
-                            <td className="p-4 border-t">{c.tariffCategory}</td>
-                            <td className="p-4 border-t">{c.meterNumber}</td>
-                            <td className="p-4 border-t text-right space-x-2">
-                                <button onClick={() => onEdit(c)} className="text-green-600 hover:underline gap-4">Edit</button>
-                                <button onClick={() => onDelete(c._id)} className="text-red-600 hover:underline">Delete</button>
+                            <td className="px-4 py-3 border-t">{c.address?.gewog?.name ?? "N/A"}</td>
+                            <td className="px-4 py-3 border-t">{c.tariffCategory}</td>
+                            <td className="px-4 py-3 border-t">{c.meterNumber}</td>
+                            <td className="px-4 py-3 border-t text-right space-x-2">
+                                <button
+                                    onClick={() => onEdit(c)}
+                                    className="inline-flex items-center gap-1 px-2 py-1 text-blue-600 hover:text-blue-800 hover:bg-blue-100 rounded transition"
+                                    title="Edit"
+                                >
+                                    <Pencil className="w-4 h-4" />
+                                </button>
+                                <button
+                                    onClick={() => onDelete(c._id)}
+                                    className="inline-flex items-center gap-1 px-2 py-1 text-red-600 hover:text-red-800 hover:bg-red-100 rounded transition"
+                                    title="Delete"
+                                >
+                                    <Trash2 className="w-4 h-4" />
+                                </button>
                             </td>
                         </tr>
                     ))
                 )}
             </tbody>
-
         </table>
     </section>
 );

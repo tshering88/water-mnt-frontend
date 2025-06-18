@@ -7,6 +7,7 @@ import { ConsumerTable } from '../../components/ConsumerTable';
 import { ConfirmDialog } from '../../components/ConfirmationDialog';
 import Loading from '../../components/Loading';
 import { useConsumerStore } from '../../store/useConsumerStore';
+import { Button } from '../../components/ui/button';
 
 export default function ConsumerManagement() {
 
@@ -76,24 +77,18 @@ export default function ConsumerManagement() {
             Consumer Management
           </h1>
         </div>
-
-        {/* Optional: Add Button or Summary */}
-        <div className="hidden md:flex flex-col items-end text-white">
-          <span className="text-sm">Total Consumers</span>
-          <span className="text-3xl font-extrabold">{consumers.length}</span>
-        </div>
+        <Button
+          onClick={() => {
+            setSelectedConsumer(null);
+            setModalMode('add');
+          }}
+          className="mb-4 px-5 py-2.5 bg-gradient-to-r
+        from-blue-600 to-indigo-600 text-white 
+        text-sm font-medium rounded-lg shadow-md
+         hover:from-blue-700 hover:to-indigo-700 transition-all duration-200">
+          Add
+        </Button>
       </div>
-
-      <button
-        onClick={() => {
-          setSelectedConsumer(null);
-          setModalMode('add');
-        }}
-        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded"
-      >
-        Add Consumer
-      </button>
-
 
       {!consumersLoading && consumers.length === 0 && <p>No consumers found.</p>}
 
@@ -104,7 +99,7 @@ export default function ConsumerManagement() {
           setSelectedConsumer(c);
           setModalMode('edit');
         }}
-        onDelete={(id) => setConfirmDeleteId(id)} // Show confirm dialog instead of deleting directly
+        onDelete={(id) => setConfirmDeleteId(id)}
       />
 
       {(modalMode === 'add' || modalMode === 'edit') && (

@@ -76,8 +76,6 @@ const ConsumerForm: React.FC<Props> = ({
     }
   };
 
-
-
   const dzongkhagNames = Array.from(
     new Set(
       gewogs
@@ -118,8 +116,6 @@ const ConsumerForm: React.FC<Props> = ({
     onSubmit();
   };
 
-
-
   return (
     <form
       className="space-y-6"
@@ -140,8 +136,8 @@ const ConsumerForm: React.FC<Props> = ({
           Search
         </Button>
       </div>
-      {/* Show matched user info */}
 
+      {/* Show matched user info */}
       {matchedUser && (
         <div className="p-3 border border-gray-300 rounded-md bg-white shadow-sm text-sm text-gray-700 max-w-md mx-auto flex items-center gap-4 flex-wrap">
           <div className="flex items-center gap-1">
@@ -175,19 +171,21 @@ const ConsumerForm: React.FC<Props> = ({
           onChange={(v: string) => onChange('householdId', v)}
           required
         />
+
         <SelectField
           label="Status"
           value={formData.status}
           options={Object.values(ConsumerStatus)}
           onChange={(v: ConsumerStatus) => onChange('status', v)}
-
         />
+
         <SelectField
           label="Dzongkhag"
           value={formData.addressDzongkhag}
           options={dzongkhagNames}
           onChange={(v: string) => onChange('addressDzongkhag', v)}
         />
+
         <SelectField
           label="Gewog"
           value={formData.addressGewog}
@@ -195,16 +193,19 @@ const ConsumerForm: React.FC<Props> = ({
           onChange={(v: string) => onChange('addressGewog', v)}
           disabled={!formData.addressDzongkhag}
         />
+
         <InputField
           label="Village"
           value={formData.addressVillage}
           onChange={(v: string) => onChange('addressVillage', v)}
         />
+
         <InputField
           label="House Number"
           value={formData.addressHouseNumber}
           onChange={(v: string) => onChange('addressHouseNumber', v)}
         />
+
         <InputField
           label="Family Size"
           value={formData.familySize}
@@ -212,17 +213,20 @@ const ConsumerForm: React.FC<Props> = ({
           type="number"
           min={1}
         />
+
         <SelectField
           label="Connection Type"
           value={formData.connectionType}
           options={Object.values(ConnectionType)}
           onChange={(v: ConnectionType) => onChange('connectionType', v)}
         />
+
         <InputField
           label="Meter Number"
           value={formData.meterNumber}
           onChange={(v: string) => onChange('meterNumber', v)}
         />
+
         <InputField
           label="Connection Date"
           type="date"

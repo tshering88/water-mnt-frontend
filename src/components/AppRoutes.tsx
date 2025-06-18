@@ -19,8 +19,6 @@ const AppRoute = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/" element={<Home />} />
 
-
-
       {/* Protected Routes */}
       <Route element={<ProtectedRoute />}>
         <Route path="/dashboard" element={<Dashboard />} />
@@ -28,10 +26,6 @@ const AppRoute = () => {
         <Route path="/dzongkhag" element={<Dzongkhag />} />
         <Route path="/gewog" element={<Gewog />} />
         <Route path="/consumer" element={<ConsumerManagement />} />
-
-
-
-
       </Route>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>

@@ -1,8 +1,6 @@
 import React from 'react';
 import type { ConsumerFormType } from '../types';
 
-
-
 const ConsumerDetails: React.FC<{ data: ConsumerFormType }> = ({ data }) => (
   <div className="space-y-4 text-white">
     <p><strong>Household ID:</strong> {data.householdId}</p>
