@@ -29,7 +29,6 @@ export default function ConsumerManagement() {
     try {
       await addConsumer(payload);
       await fetchConsumers();
-      toast.success('Consumer added successfully');
     } catch (error) {
       toast.error('Failed to add consumer');
       console.error(error);
@@ -40,7 +39,6 @@ export default function ConsumerManagement() {
     try {
       await updateConsumer(id, payload);
       await fetchConsumers();
-      toast.success('Consumer updated successfully');
     } catch (error) {
       toast.error('Failed to update consumer');
       console.error(error);
@@ -50,7 +48,6 @@ export default function ConsumerManagement() {
   const handleDelete = async (id: string) => {
     try {
       await deleteConsumer(id);
-      toast.success('Consumer deleted successfully');
     } catch (error) {
       toast.error('Failed to delete consumer');
       console.error(error);
