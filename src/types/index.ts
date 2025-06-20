@@ -1,6 +1,4 @@
 import type { ConnectionType, ConsumerStatus, RegionType, TariffCategory, UserRole } from "../lib/constant";
-
-
 // ===========================
 // User Types
 // ===========================
@@ -69,7 +67,10 @@ export type DeleteUserResponse = {
   message: string;
 };
 
-//  Dzongkhag Type
+/////////////////////
+//  Dzongkhag Type //
+/////////////////////
+
 export type CoordinatesType =  {
     latitude: number | null;
     longitude: number| null;
@@ -111,9 +112,10 @@ export type DzongkhagUpdateType = {
   coordinates?: CoordinatesType
 };
 
-   ///////////
+/////////////////
 // Gewog Type //
-   ////////// 
+//////////////// 
+
 export type GewogType = {
   _id: string;
   name: string;
@@ -134,7 +136,6 @@ export type CreateUpdateGewogResponse = {
   message: string;
 };
 
-
 export type GewogUpdateType = {
   _id?: string;
   name?: string;
@@ -147,6 +148,7 @@ export type GewogUpdateType = {
 
 //////////////////
 //// Consumer////
+////////////////
 
 export type ConsumerResponse = {
   message: string
@@ -273,7 +275,7 @@ export type ConsumerPayload = {
 };
 
 export type ConsumerFormType = {
-  _id?: string
+  _id: string
   userId?: string
   householdId: string;
   householdHead?: string; // optional if not editing
