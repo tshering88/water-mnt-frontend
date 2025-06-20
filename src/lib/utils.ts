@@ -100,6 +100,7 @@ export const emptyConsumerForm: ConsumerFormType = {
   connectionDate: '',
   status: ConsumerStatus.ACTIVE,
   tariffCategory: TariffCategory.DOMESTIC,
+  _id: ""
 };
 
 export const initializeFormDataFromConsumer = (consumer: Consumer): ConsumerFormType => ({

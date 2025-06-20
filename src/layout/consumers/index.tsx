@@ -54,11 +54,6 @@ export default function ConsumerManagement() {
     }
   };
 
-  function onView(c: Consumer): void {
-    setSelectedConsumer(c);
-    setModalMode('view');
-  }
-
   if (consumersLoading) {
     return <Loading />
   }
@@ -91,7 +86,6 @@ export default function ConsumerManagement() {
 
       <ConsumerTable
         consumers={consumers}
-        onView={onView}
         onEdit={(c) => {
           setSelectedConsumer(c);
           setModalMode('edit');
