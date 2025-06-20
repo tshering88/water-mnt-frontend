@@ -91,26 +91,27 @@ const UserList = ({ onAddUserClick, onEditUser }: UserListProps) => {
           {/* Actions */}
           {hasAdminPrivileges && (
             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
-                  <MoreVertical size={16} />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-32">
-                <DropdownMenuItem onClick={() => onEditUser(u)}>
-                  <Edit size={14} className="mr-2" />
-                  Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => handleDeleteClick(u._id, u.name)}
-                  disabled={isCurrentUser}
-                  className="text-red-600 focus:text-red-600"
-                >
-                  <Trash2 size={14} className="mr-2" />
-                  Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+  <DropdownMenuTrigger asChild>
+    <Button variant="ghost" size="sm" className="h-8 w-8 p-0 bg-gray-400">
+      <MoreVertical size={16} />
+    </Button>
+  </DropdownMenuTrigger>
+  <DropdownMenuContent align="end" className="w-32 bg-gray-400 text-white">
+    <DropdownMenuItem onClick={() => onEditUser(u)}>
+      <Edit size={14} className="mr-2 " />
+      Edit
+    </DropdownMenuItem>
+    <DropdownMenuItem
+      onClick={() => handleDeleteClick(u._id, u.name)}
+      disabled={isCurrentUser}
+      className="text-red-500 focus:text-red-100"
+    >
+      <Trash2 size={14} className="mr-2" />
+      Delete
+    </DropdownMenuItem>
+  </DropdownMenuContent>
+</DropdownMenu>
+
           )}
         </div>
 
